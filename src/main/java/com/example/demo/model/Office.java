@@ -1,15 +1,21 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*; //<-- aggiunto import così da poter usare annotations come 'Entity'!
+import jakarta.persistence.*;
 
 import java.util.List;
 
-//model ufficio --> Fab11/Frisk11
+/**
+ * Represents the office, it helps to set default information
+ * such as the office's name, the office's phone number,
+ */
 @Entity
 public class Office {
 
-   //Primary key
-
+    /**
+     * Primary Key, auto_incrementer
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String officeName;
@@ -21,79 +27,151 @@ public class Office {
     private String rating;
 
 
-    //costruttore vuoto
+    /**
+     * Empty constructor
+     */
     public Office() {
 
 
     }
 
 
-
+    /**
+     * @param officeName  Office's name
+     * @param secretary   Represents a secretary - Object type: Secretary
+     * @param specialists A list of specialists - Object type: Specialist
+     * @param address     Office's address  - Object type: Address
+     */
     public Office(String officeName, Secretary secretary, List<Specialist> specialists, Address address) {
-      this.officeName = officeName;
-      this.specialists = specialists;
-      this.secretary = secretary;
-      this.phone = secretary.getPhone();
-      this.email = secretary.getEmail();
-      this.address = address;
-      this.rating = getRating();
-   }
+        this.officeName = officeName;
+        this.specialists = specialists;
+        this.secretary = secretary;
+        this.phone = secretary.getPhone();
+        this.email = secretary.getEmail();
+        this.address = address;
+        this.rating = getRating();
+    }
 
-   public Long getId() {
-      return id;
-   }
+    /**
+     * @return office's id
+     */
+    public Long getId() {
+        return id;
+    }
 
-   public void setId(Long id) {
-      this.id = id;
-   }
+    /**
+     * To set the id of the office
+     * @param id Office's id, in the database it's a primary key
+     *           -object type: Long
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-   public String getOfficeName() {
-      return officeName;
-   }
+    /**
+     *
+     * @return office's name
+     */
+    public String getOfficeName() {
+        return officeName;
+    }
 
-   public void setOfficeName(String officeName) {
-      this.officeName = officeName;
-   }
+    /**
+     * Setter for office's name
+     * @param officeName office's name
+     */
+    public void setOfficeName(String officeName) {
+        this.officeName = officeName;
+    }
 
-   public String getPhone() {
-      return phone;
-   }
+    /**
+     *
+     * @return the phone number of the office
+     */
+    public String getPhone() {
+        return phone;
+    }
 
-   public void setPhone(String phone) {
-      this.phone = phone;
-   }
+    /**
+     * Setter for the phone number
+     * @param phone office's phone number
+     */
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-   public String getEmail() {
-      return email;
-   }
+    /**
+     *
+     * @return office's email
+     */
+    public String getEmail() {
+        return email;
+    }
 
-   public void setEmail(String email) {
-      this.email = email;
-   }
+    /**
+     * Setter for the email
+     * @param email office's email
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     *
+     * @return office's the address
+     */
+
     public Address getAddress() {
         return address;
     }
+
+    /**
+     *
+     * @param address address of the office -
+     *                Object type: Address
+     */
 
     public void setAddress(Address address) {
         this.address = address;
     }
 
+    /**
+     *
+     * @return the secretary
+     */
     public Secretary getSecretary() {
         return secretary;
     }
+
+    /**
+     * Setter for the secretary
+     * @param secretary Object type: Secretary
+     */
 
     public void setSecretary(Secretary secretary) {
         this.secretary = secretary;
     }
 
+    /**
+     *
+     * @return the list of the specialists
+     */
     public List<Specialist> getSpecialists() {
         return specialists;
     }
 
+    /**
+     * Setter for the list of specialists
+     * @param specialists list - object type: Specialist
+     */
     public void setSpecialists(List<Specialist> specialists) {
         this.specialists = specialists;
     }
 
+    /**
+     *
+     * @return the rating of the office
+     */
     public String getRating() {
         double sum = 0.0;
         for (Specialist specialist : this.specialists) {
@@ -102,23 +180,29 @@ public class Office {
         sum /= this.specialists.size();
         rating = String.format("%.1f", sum);
 
-        return  rating;
+        return rating;
     }
 
+    /**
+     * Setter for the rating
+     *
+     * @param rating office's rating
+     */
     public void setRating(String rating) {
         this.rating = rating;
     }
 
-    @Override
-    public String toString() {
-        return "\n  " +
-                ", officeName= '" + officeName + '\'' +
+    /**
+     * It helps to print the office in an aesthetically prettier way
+     */
+    public void printOffice() {
+        System.out.println("\n  " +
+                officeName + '\'' +
                 "address: '" + address + '\'' +
                 ", phone= '" + phone + '\'' +
-                ", email= '" + email + '\'' ;
+                ", email= '" + email + '\'');
     }
 
 }
-
 
 
