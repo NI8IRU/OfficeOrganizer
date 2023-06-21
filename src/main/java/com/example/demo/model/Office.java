@@ -6,7 +6,9 @@ import java.util.List;
 
 /**
  * Represents the office, it helps to set default information
- * such as the office's name, the office's phone number,
+ * such as the office's name, the office's phone number and
+ * the office's address, it also contains a list of specialist
+ * and an object type secretary
  */
 @Entity
 public class Office {
