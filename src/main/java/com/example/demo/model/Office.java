@@ -1,8 +1,8 @@
 package com.example.demo.model;
 
-import com.example.demo.model.record.Address;
-import org.springframework.stereotype.Repository;
 import jakarta.persistence.*; //<-- aggiunto import così da poter usare annotations come 'Entity'!
+
+import java.util.List;
 
 //model ufficio --> Fab11/Frisk11
 @Entity
@@ -10,16 +10,15 @@ public class Office {
 
    //Primary key
 
-    private Integer id;
+    private Long id;
 
     private String officeName;
-
-    //Foreign key di tipo segretario, da implementare ancora il model
-//   private List<Secretary> secretaries;
+    private Secretary secretary;
+    private List<Specialist> specialists;
     private String phone;
     private String email;
-
     private Address address;
+    private String rating;
 
 
     //costruttore vuoto
@@ -30,18 +29,21 @@ public class Office {
 
 
 
-    public Office(String officeName, String phone, String email, Address address) {
+    public Office(String officeName, Secretary secretary, List<Specialist> specialists, Address address) {
       this.officeName = officeName;
-      this.phone = phone;
-      this.email = email;
+      this.specialists = specialists;
+      this.secretary = secretary;
+      this.phone = secretary.getPhone();
+      this.email = secretary.getEmail();
       this.address = address;
+      this.rating = getRating();
    }
 
-   public Integer getId() {
+   public Long getId() {
       return id;
    }
 
-   public void setId(Integer id) {
+   public void setId(Long id) {
       this.id = id;
    }
 
@@ -74,6 +76,37 @@ public class Office {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public Secretary getSecretary() {
+        return secretary;
+    }
+
+    public void setSecretary(Secretary secretary) {
+        this.secretary = secretary;
+    }
+
+    public List<Specialist> getSpecialists() {
+        return specialists;
+    }
+
+    public void setSpecialists(List<Specialist> specialists) {
+        this.specialists = specialists;
+    }
+
+    public String getRating() {
+        double sum = 0.0;
+        for (Specialist specialist : this.specialists) {
+            sum += specialist.getRating();
+        }
+        sum /= this.specialists.size();
+        rating = String.format("%.1f", sum);
+
+        return  rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 
     @Override
