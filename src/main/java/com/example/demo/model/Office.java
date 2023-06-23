@@ -20,6 +20,7 @@ public class Office {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "office_name")
     private String officeName;
     private Secretary secretary;
     private List<Specialist> specialists;
