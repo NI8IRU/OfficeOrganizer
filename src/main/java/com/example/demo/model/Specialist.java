@@ -1,18 +1,17 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
-  @Entity
+@Entity
   /**
  * Represents a Specialist in the system.
  */
 public class Specialist {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long specialistId;
+    private Long id;
+    @ManyToOne
+    @JoinColumn(name = "id_office", referencedColumnName = "id")
     private Long officeId;
     private String specialistName;
     private String specialistType;
@@ -20,15 +19,15 @@ public class Specialist {
 
     /**
      *
-     * @param specialistId id and primary key of Specialist
+     * @param id id and primary key of Specialist
      * @param officeId office assigned to a Specialist (Foreign key of Prenotation)
      * @param specialistName Name of the Specialist
      * @param specialistType Specialized job or mansion
      * @param rating work score of Specialist
      */
 
-    public Specialist(Long specialistId, Long officeId, String specialistName, String specialistType, Integer rating) {
-        this.specialistId = specialistId;
+    public Specialist(Long id, Long officeId, String specialistName, String specialistType, Integer rating) {
+        this.id = id;
         this.officeId = officeId;
         this.specialistName = specialistName;
         this.specialistType = specialistType;
@@ -46,12 +45,12 @@ public class Specialist {
      * Getters and Setters of Specialist class
      */
 
-    public Long getSpecialistId() {
-        return specialistId;
+    public Long getId() {
+        return id;
     }
 
-    public void setSpecialistId(Long specialistId) {
-        this.specialistId = specialistId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getOfficeId() {

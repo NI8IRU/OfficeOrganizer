@@ -1,21 +1,25 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 /**
  * Represents a Secretary in the system.
  */
 @Entity
+@Table(name = "secretary")
 public class Secretary {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
+    @OneToOne
+    @Column(name = "office_id")
     private Office office;
+    @Column(name = "secretary_name")
     private String name;
+    @Column(name = "phone")
     private String phone;
+    @Column(name = "email")
     private String email;
 
     /**

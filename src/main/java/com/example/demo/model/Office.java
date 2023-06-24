@@ -19,13 +19,18 @@ public class Office {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     @Column(name = "office_name")
     private String officeName;
+    @OneToOne(mappedBy = "office")
+    @JoinColumn(name = "id_secretary", referencedColumnName = "id")
     private Secretary secretary;
+    @OneToMany(mappedBy = "office")
+    @Column(name = "id_specialist")
     private List<Specialist> specialists;
     private String phone;
     private String email;
+    @OneToOne(mappedBy = "office")
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
     private String rating;
 
@@ -176,13 +181,6 @@ public class Office {
      * @return the rating of the office
      */
     public String getRating() {
-        double sum = 0.0;
-        for (Specialist specialist : this.specialists) {
-            sum += specialist.getRating();
-        }
-        sum /= this.specialists.size();
-        rating = String.format("%.1f", sum);
-
         return rating;
     }
 

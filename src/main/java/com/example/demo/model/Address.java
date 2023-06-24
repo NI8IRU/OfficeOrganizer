@@ -1,9 +1,6 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 /**
  *It helps to set the office's address
@@ -19,6 +16,9 @@ public class Address {
     private Integer cap;
     private String city;
     private String additionalInformation;
+    @OneToOne
+    @Column(name = "office_id")
+    private Office office;
 
 
     /**
@@ -29,14 +29,16 @@ public class Address {
      * @param cap   office's cap
      * @param city city where its located the office
      * @param additionalInformation additional info about the office
+     * @param office office in this address
      */
-    public Address(String street, String district, Integer houseNumber, Integer cap, String city, String additionalInformation) {
+    public Address(String street, String district, Integer houseNumber, Integer cap, String city, String additionalInformation, Office office) {
         this.street = street;
         this.district = district;
         this.houseNumber = houseNumber;
         this.cap = cap;
         this.city = city;
         this.additionalInformation = additionalInformation;
+        this.office = office;
     }
 
     /**
@@ -161,5 +163,13 @@ public class Address {
      */
     public void setAdditionalInformation(String additionalInformation) {
         this.additionalInformation = additionalInformation;
+    }
+
+    public Office getOffice() {
+        return office;
+    }
+
+    public void setOffice(Office office) {
+        this.office = office;
     }
 }
