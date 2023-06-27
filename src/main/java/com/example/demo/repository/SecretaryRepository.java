@@ -7,9 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SecretaryDao extends JpaRepository<Secretary, Long> {
+public interface SecretaryRepository extends JpaRepository<Secretary, Long> {
     List<Secretary> findAll();
     Secretary getReferenceById(Long id);
-//    Secretary save(Secretary secretary);
     void deleteById(Long id);
 }
