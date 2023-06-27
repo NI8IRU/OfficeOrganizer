@@ -32,7 +32,7 @@ public class Office {
     @OneToOne(mappedBy = "office")
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
-    private String rating;
+    private Double rating;
 
 
     /**
@@ -50,14 +50,14 @@ public class Office {
      * @param specialists A list of specialists - Object type: Specialist
      * @param address     Office's address  - Object type: Address
      */
-    public Office(String officeName, Secretary secretary, List<Specialist> specialists, Address address) {
+    public Office(String officeName, Secretary secretary, List<Specialist> specialists, Address address, Double rating) {
         this.officeName = officeName;
         this.specialists = specialists;
         this.secretary = secretary;
         this.phone = secretary.getPhone();
         this.email = secretary.getEmail();
         this.address = address;
-        this.rating = getRating();
+        this.rating = rating;
     }
 
     /**
@@ -180,7 +180,7 @@ public class Office {
      *
      * @return the rating of the office
      */
-    public String getRating() {
+    public Double getRating() {
         return rating;
     }
 
@@ -189,7 +189,7 @@ public class Office {
      *
      * @param rating office's rating
      */
-    public void setRating(String rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 
