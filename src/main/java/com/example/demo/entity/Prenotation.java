@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
@@ -11,13 +11,21 @@ public class Prenotation {
      * Represents the Prenotation with all the necessary fields
      */
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @ManyToOne
+    @JoinColumn(name = "specialist_id", referencedColumnName = "id")
     private Specialist specialist_id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user_id;
 
+    @Column(name = "description")
+
     private String description;
+    @Column(name = "date")
     private Date date;
 
     public Prenotation(Long id, Specialist specialist_id, User user_id, String description, Date date) {

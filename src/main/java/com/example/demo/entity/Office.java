@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
@@ -10,27 +10,33 @@ import java.util.List;
  * the office's address, it also contains a list of specialist
  * and an object type secretary
  */
-
+@Entity
+@Table(name = "office")
 
 public class Office {
 
     /**
-     * Primary Key
+     * Primary Key, auto_incrementer
      */
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    @Column(name = "office_name")
     private String officeName;
-
+    @OneToOne(mappedBy = "office")
+    @JoinColumn(name = "id_secretary", referencedColumnName = "id")
     private Secretary secretary;
-
+    @OneToMany(mappedBy = "office")
+    @Column(name = "id_specialist")
     private List<Specialist> specialists;
 
+    @Column(name = "phone")
 
     private String phone;
-
+    @Column(name = "email")
     private String email;
-
+    @OneToOne(mappedBy = "office")
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
     private Double rating;
 

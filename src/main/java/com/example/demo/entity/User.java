@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
@@ -10,13 +10,18 @@ public class User {
     /**
      * Represents client
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long user_id;
 
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "surname")
 
     private String surname;
 
+    @Column(name = "email")
 
     private String email;
 

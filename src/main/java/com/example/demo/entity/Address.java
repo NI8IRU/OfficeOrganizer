@@ -1,12 +1,14 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
+import jakarta.persistence.*;
 
 /**
  *It helps to set the office's address
  */
-
+@Entity
 public class Address {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String street;
     private String district;
@@ -14,7 +16,8 @@ public class Address {
     private Integer cap;
     private String city;
     private String additionalInformation;
-
+    @OneToOne
+    @Column(name = "office_id")
     private Office office;
 
 

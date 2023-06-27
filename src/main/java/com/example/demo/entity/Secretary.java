@@ -1,17 +1,25 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
 /**
  * Represents a Secretary in the system.
  */
-
+@Entity
+@Table(name = "secretary")
 public class Secretary {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
+    @OneToOne(mappedBy = "secretary")
+    @Column(name = "office_id")
     private Office office;
+    @Column(name = "secretary_name")
     private String name;
+    @Column(name = "phone")
     private String phone;
+    @Column(name = "email")
     private String email;
 
     /**

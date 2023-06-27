@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
@@ -6,16 +6,24 @@ import jakarta.persistence.*;
  * Represents a Specialist in the system.
  */
 
-
+  @Entity
+  @Table(name = "specialist")
 public class Specialist {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @ManyToOne
+    @JoinColumn(name = "id_office", referencedColumnName = "id")
     private Long officeId;
 
+    @Column(name = "specialist_name")
 
     private String specialistName;
+    @Column(name = "specialist_type")
 
     private String specialistType;
 
+    @Column(name = "rating")
     private Integer rating;
 
     /**
