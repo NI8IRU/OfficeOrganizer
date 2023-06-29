@@ -2,6 +2,8 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "user")
 
@@ -25,19 +27,23 @@ public class User {
 
     private String email;
 
+    @Column (name ="prenotation")
+    private List<Prenotation> prenotations;
+
     /**
      * @param user_id
      * @param name
      * @param surname
      * @param email
+     * @param prenotations
      */
-    public User(Long user_id, String name, String surname, String email) {
+    public User(Long user_id, String name, String surname, String email, List<Prenotation> prenotations) {
         this.user_id = user_id;
         this.name = name;
         this.surname = surname;
         this.email = email;
+        this.prenotations = prenotations;
     }
-
     public User() {
     }
 
@@ -71,5 +77,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Prenotation> getPrenotations() {
+        return prenotations;
+    }
+
+    public void setPrenotations(List<Prenotation> prenotations) {
+        this.prenotations = prenotations;
     }
 }
