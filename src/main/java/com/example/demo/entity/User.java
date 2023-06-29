@@ -14,7 +14,7 @@ public class User {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long user_id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -38,7 +38,7 @@ public class User {
      * @param prenotations
      */
     public User(Long user_id, String name, String surname, String email, List<Prenotation> prenotations) {
-        this.user_id = user_id;
+        this.id = user_id;
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -47,12 +47,12 @@ public class User {
     public User() {
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
