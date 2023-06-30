@@ -1,8 +1,6 @@
-package com.example.demo.model;
+package com.example.demo.dto;
 
-import jakarta.persistence.*;
-
-  /**
+/**
  * Represents a Specialist in the system.
  */
 

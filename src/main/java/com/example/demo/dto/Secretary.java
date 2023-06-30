@@ -1,6 +1,4 @@
-package com.example.demo.model;
-
-import jakarta.persistence.*;
+package com.example.demo.dto;
 
 /**
  * Represents a Secretary in the system.

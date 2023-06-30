@@ -11,11 +11,6 @@ import java.util.List;
 public interface OfficeRepository extends JpaRepository<Office, Long> {
 
     /**
-     * @return All offices
-     */
-    List<Office> findAll();
-
-    /**
      * @param id Office's id
      * @return the office according to its id
      */

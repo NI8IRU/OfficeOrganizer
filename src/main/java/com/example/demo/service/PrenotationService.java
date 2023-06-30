@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Prenotation;
+import com.example.demo.dto.Prenotation;
 import com.example.demo.repository.PrenotationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
