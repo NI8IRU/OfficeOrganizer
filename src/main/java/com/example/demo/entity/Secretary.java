@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.enums.StatusEnum;
 import jakarta.persistence.*;
 
 /**
@@ -21,27 +22,8 @@ public class Secretary {
     private String phone;
     @Column(name = "email")
     private String email;
-
-    /**
-     * Constructs a Secretary object with the specified office, name, phone, and email.
-     *
-     * @param office The office of the secretary.
-     * @param name   The name of the secretary.
-     * @param phone  The phone number of the secretary.
-     * @param email  The email address of the secretary.
-     */
-    public Secretary(Office office, String name, String phone, String email) {
-        this.office = office;
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-    }
-
-    /**
-     * Constructs a new Secretary object.
-     */
-    public Secretary() {
-    }
+    @Column(name = "status", columnDefinition = "ACTIVE")
+    private StatusEnum status;
 
     /**
      * Returns the ID of the secretary.
@@ -131,5 +113,23 @@ public class Secretary {
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     * Returns the current status of the secretary.
+     *
+     * @return The current status of the secretary.
+     */
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    /**
+     * Sets the status of the secretary.
+     *
+     * @param status The email address of the secretary.
+     */
+    public void setStatus(StatusEnum status) {
+        this.status = status;
     }
 }
