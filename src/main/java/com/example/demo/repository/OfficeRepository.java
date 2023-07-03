@@ -6,21 +6,22 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface OfficeRepository extends JpaRepository<Office, Long> {
 
     /**
-     * @param id Office's id
-     * @return the office according to its id
+     * @param name Office's name
+     * @return the office according to its name
      */
-    Office getReferenceById(Long id);
+   Optional <Office> getReferenceByName(String name);
 
     /**
      * Delete the office according to its id
      *
-     * @param id Office's id
+     * @param name Office's name
      */
-    void deleteById(Long id);
+    void deleteByName(String name);
 
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OfficeService {
@@ -39,28 +40,39 @@ public class OfficeService {
      */
     public void addOffice(Office office) {
 
-        officeRepository.save(office);
+        if (office != null){
+
+            officeRepository.save(office);
+        }
     }
 
     /**
-     * Delete the office according to its id
+     * Delete the office according to its name
      *
-     * @param id Office's id
+     * @param name Office's name
      */
-    public void deleteOfficeById(Long id) {
+    public void  deleteOfficeByName(String name) {
 
-        officeRepository.deleteById(id);
+        if(officeRepository.getReferenceByName(name).isPresent()){
+
+            officeRepository.deleteByName(name);
+        }
 
     }
 
     /**
-     *
-     * @param id Office's id
-     * @return the office according to its id
+     * @param name Office's name
+     * @return the office according to its name
      */
 
-    public Office getOfficeById(Long id) {
+    public Optional<Office> getOfficeByName(String name) {
 
-        return officeRepository.getReferenceById(id);
+        if(officeRepository.getReferenceByName(name).isPresent()){
+            return officeRepository.getReferenceByName(name);
+
+        } else{
+           throw new NullPointerException("Something went wrong!");
+
+        }
     }
 }
