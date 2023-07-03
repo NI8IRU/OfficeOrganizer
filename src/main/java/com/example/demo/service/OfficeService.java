@@ -3,6 +3,8 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Office;
 import com.example.demo.repository.OfficeRepository;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +42,7 @@ public class OfficeService {
      */
     public void addOffice(Office office) {
 
-        if (office != null){
+        if (office != null) {
 
             officeRepository.save(office);
         }
@@ -51,9 +53,9 @@ public class OfficeService {
      *
      * @param name Office's name
      */
-    public void  deleteOfficeByName(String name) {
+    public void deleteOfficeByName(String name) {
 
-        if(officeRepository.getReferenceByName(name).isPresent()){
+        if (officeRepository.getReferenceByName(name).isPresent()) {
 
             officeRepository.deleteByName(name);
         }
@@ -67,11 +69,27 @@ public class OfficeService {
 
     public Optional<Office> getOfficeByName(String name) {
 
-        if(officeRepository.getReferenceByName(name).isPresent()){
+        Optional<Office> optionalOffice = officeRepository.getReferenceByName(name);
+
+        Office office2 = new Office();
+
+
+        if (optionalOffice.isPresent()) {
+
+            Office office = optionalOffice.get();
+            office2.setOfficeName(office.getOfficeName());
+            office2.setAddress(office.getAddress());
+            office2.setEmail(office.getEmail());
+            office2.setPhone(office.getPhone());
+            office2.setId(office.getId());
+            office2.setRating(office.getRating());
+            office2.setSecretary(office.getSecretary());
+            office2.setSpecialists(office.getSpecialists());
+
             return officeRepository.getReferenceByName(name);
 
-        } else{
-           throw new NullPointerException("Something went wrong!");
+        } else {
+            throw new NullPointerException("Something went wrong!");
 
         }
     }
