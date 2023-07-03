@@ -2,12 +2,11 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Secretary;
 import com.example.demo.enums.StatusEnum;
-import com.example.demo.exeptions.ResponseStatusException;
+import com.example.demo.exeption.ResponseStatusNotFoundException;
 import com.example.demo.repository.SecretaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,19 +42,19 @@ public class SecretaryService {
      * @param id the ID of the Secretary entity to retrieve
      * @return the Secretary entity with the specified ID
      */
-    public Secretary findById(Long id) throws ResponseStatusException {
+    public Secretary findById(Long id) throws ResponseStatusNotFoundException {
         Optional<Secretary> optionalSecretary = secretaryRepository.findById(id);
         Secretary secretary;
 
         if (optionalSecretary.isPresent()) {
             secretary = optionalSecretary.get();
         } else {
-            throw new ResponseStatusException("Secretary not found!");
+            throw new ResponseStatusNotFoundException("Secretary not found!");
         }
 
         if (secretary.getStatus() == StatusEnum.ACTIVE) {
             return secretary;
-        } else throw new ResponseStatusException("Secretary is not active!");
+        } else throw new ResponseStatusNotFoundException("Secretary is not active!");
     }
 
     /**
@@ -71,16 +70,16 @@ public class SecretaryService {
      * Performs a logical deletion of a Secretary entity by its ID.
      *
      * @param id the ID of the Secretary entity to delete
-     * @throws ResponseStatusException if the Secretary entity with the specified ID is not found
+     * @throws ResponseStatusNotFoundException if the Secretary entity with the specified ID is not found
      */
-    public void logicalDeleteSecretaryById(Long id) throws ResponseStatusException {
+    public void logicalDeleteSecretaryById(Long id) throws ResponseStatusNotFoundException {
         Optional<Secretary> optionalSecretary = secretaryRepository.findById(id);
         Secretary secretary;
 
         if (optionalSecretary.isPresent()) {
             secretary = optionalSecretary.get();
         } else {
-            throw new ResponseStatusException("Secretary not found!");
+            throw new ResponseStatusNotFoundException("Secretary not found!");
         }
 
         secretary.setStatus(StatusEnum.DELETED);

@@ -2,6 +2,9 @@ package com.example.demo.service;
 
 
 import com.example.demo.entity.Office;
+import com.example.demo.entity.Secretary;
+import com.example.demo.enums.StatusEnum;
+import com.example.demo.exeption.ResponseStatusNotFoundException;
 import com.example.demo.repository.OfficeRepository;
 
 
@@ -33,6 +36,21 @@ public class OfficeService {
     public List<Office> findAllOffices() {
 
         return officeRepository.findAll();
+    }
+
+    public Office findById(Long id) throws ResponseStatusNotFoundException {
+        Optional<Office> optionalOffice = officeRepository.findById(id);
+        Office office;
+
+        if (optionalOffice.isPresent()) {
+            office = optionalOffice.get();
+        } else {
+            throw new ResponseStatusNotFoundException("Office not found!");
+        }
+
+        if (office.getStatus() == StatusEnum.ACTIVE) {
+            return office;
+        } else throw new ResponseStatusNotFoundException("Office is not active!");
     }
 
     /**

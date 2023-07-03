@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.enums.StatusEnum;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -39,6 +40,8 @@ public class Office {
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
     private Double rating;
+    @Column(name = "status", columnDefinition = "ACTIVE")
+    private StatusEnum status;
 
 
     /**
@@ -195,6 +198,14 @@ public class Office {
      */
     public void setRating(Double rating) {
         this.rating = rating;
+    }
+
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
     }
 
     /**
