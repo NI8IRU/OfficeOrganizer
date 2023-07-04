@@ -5,6 +5,8 @@ import java.util.List;
 
 public class CreateOfficeDto {
 
+
+    private Long id;
     private String officeName;
     private String secretary;
     private List<String> specialists;
@@ -30,6 +32,14 @@ public class CreateOfficeDto {
 
 
     public CreateOfficeDto() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getOfficeName() {

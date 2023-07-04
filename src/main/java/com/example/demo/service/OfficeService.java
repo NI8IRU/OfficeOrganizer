@@ -1,8 +1,8 @@
 package com.example.demo.service;
 
 
+import com.example.demo.dto.office.GetOfficeDto;
 import com.example.demo.entity.Office;
-import com.example.demo.entity.Secretary;
 import com.example.demo.enums.StatusEnum;
 import com.example.demo.exeption.ResponseStatusNotFoundException;
 import com.example.demo.repository.OfficeRepository;
@@ -40,10 +40,12 @@ public class OfficeService {
 
     public Office findById(Long id) throws ResponseStatusNotFoundException {
         Optional<Office> optionalOffice = officeRepository.findById(id);
+
         Office office;
 
         if (optionalOffice.isPresent()) {
-            office = optionalOffice.get();
+           office = optionalOffice.get();
+
         } else {
             throw new ResponseStatusNotFoundException("Office not found!");
         }
@@ -85,26 +87,27 @@ public class OfficeService {
      * @return the office according to its name
      */
 
-    public Optional<Office> getOfficeByName(String name) {
+    public GetOfficeDto getOfficeByName(String name) {
 
         Optional<Office> optionalOffice = officeRepository.getReferenceByName(name);
-
-        Office office2 = new Office();
 
 
         if (optionalOffice.isPresent()) {
 
             Office office = optionalOffice.get();
+
+            GetOfficeDto office2 = new GetOfficeDto();
+
+
             office2.setOfficeName(office.getOfficeName());
             office2.setAddress(office.getAddress());
             office2.setEmail(office.getEmail());
             office2.setPhone(office.getPhone());
-            office2.setId(office.getId());
             office2.setRating(office.getRating());
             office2.setSecretary(office.getSecretary());
             office2.setSpecialists(office.getSpecialists());
 
-            return officeRepository.getReferenceByName(name);
+            return  office2;
 
         } else {
             throw new NullPointerException("Something went wrong!");

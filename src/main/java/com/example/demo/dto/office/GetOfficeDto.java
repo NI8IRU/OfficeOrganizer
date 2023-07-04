@@ -1,21 +1,36 @@
 package com.example.demo.dto.office;
 
+import com.example.demo.entity.Address;
+import com.example.demo.entity.Secretary;
+import com.example.demo.entity.Specialist;
+import com.example.demo.enums.StatusEnum;
+
 import java.util.List;
 
 public class GetOfficeDto {
 
+
     private String officeName;
-    private String secretary;
-    private List<String> specialists;
+    private Secretary secretary;
+    private List<Specialist> specialists;
 
 
     private String phone;
-
     private String email;
-
-    private String address;
+    private Address address;
     private Double rating;
 
+
+    private StatusEnum status;
+
+
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
+    }
 
     public String getOfficeName() {
         return officeName;
@@ -25,19 +40,19 @@ public class GetOfficeDto {
         this.officeName = officeName;
     }
 
-    public String getSecretary() {
+    public Secretary getSecretary() {
         return secretary;
     }
 
-    public void setSecretary(String secretary) {
+    public void setSecretary(Secretary secretary) {
         this.secretary = secretary;
     }
 
-    public List<String> getSpecialists() {
+    public List<Specialist> getSpecialists() {
         return specialists;
     }
 
-    public void setSpecialists(List<String> specialists) {
+    public void setSpecialists(List<Specialist> specialists) {
         this.specialists = specialists;
     }
 
@@ -57,11 +72,11 @@ public class GetOfficeDto {
         this.email = email;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
