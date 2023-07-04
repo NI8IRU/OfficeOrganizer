@@ -4,7 +4,8 @@ import com.example.demo.dto.secretary.AddSecretaryDto;
 import com.example.demo.dto.secretary.GetSecretaryDto;
 import com.example.demo.entity.Secretary;
 import com.example.demo.enums.StatusEnum;
-import com.example.demo.exeption.ResponseStatusNotFoundException;
+import com.example.demo.exception.ResponseStatusNotFoundException;
+import com.example.demo.repository.OfficeRepository;
 import com.example.demo.repository.SecretaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,17 +20,18 @@ import java.util.Optional;
 @Service
 public class SecretaryService {
     private SecretaryRepository secretaryRepository;
-    private OfficeService officeService;
+    private OfficeRepository officeRepository;
 
     /**
-     * Constructs a new SecretaryService with the specified SecretaryRepository.
+     * Constructs a new SecretaryService with the specified SecretaryRepository and OfficeRepository.
      *
      * @param secretaryRepository the SecretaryRepository to be used
+     * @param officeRepository the OfficeRepository to be used
      */
     @Autowired
-    public SecretaryService(SecretaryRepository secretaryRepository, OfficeService officeService) {
+    public SecretaryService(SecretaryRepository secretaryRepository, OfficeRepository officeRepository) {
         this.secretaryRepository = secretaryRepository;
-        this.officeService = officeService;
+        this.officeRepository = officeRepository;
     }
 
     /**
@@ -52,6 +54,7 @@ public class SecretaryService {
      *
      * @param id the ID of the Secretary entity to retrieve
      * @return the Secretary entity with the specified ID
+     * @throws ResponseStatusNotFoundException if the Secretary entity with the specified ID is not found
      */
     public GetSecretaryDto findById(Long id) throws ResponseStatusNotFoundException {
         Optional<Secretary> optionalSecretary = secretaryRepository.findById(id);
@@ -59,26 +62,48 @@ public class SecretaryService {
         if (optionalSecretary.isPresent()) {
             Secretary secretary = optionalSecretary.get();
             GetSecretaryDto secretaryDto = new GetSecretaryDto(secretary.getName(), secretary.getOffice().getOfficeName(),
-                                                               secretary.getPhone(), secretary.getEmail());
+                    secretary.getPhone(), secretary.getEmail());
             if (secretary.getStatus() == StatusEnum.ACTIVE) {
                 return secretaryDto;
-            } else throw new ResponseStatusNotFoundException("Secretary is not active!");
-
+            } else {
+                throw new ResponseStatusNotFoundException("Secretary is not active!");
+            }
         } else {
             throw new ResponseStatusNotFoundException("Secretary not found!");
         }
-
     }
 
     /**
      * Adds a new Secretary entity.
      *
-     * @param secretary the Secretary entity to add
+     * @param secretaryDto the Secretary DTO to add
+     * @return the added Secretary DTO
      */
-    public AddSecretaryDto addSecretaryDto(AddSecretaryDto secretaryDto) throws ResponseStatusNotFoundException {
-
+    public AddSecretaryDto addSecretaryDto(AddSecretaryDto secretaryDto) {
         Secretary secretary = new Secretary();
-        secretary.setOffice(officeService.findById(secretaryDto.getOfficeId()));
+        secretary.setOffice(officeRepository.getReferenceById(secretaryDto.getOfficeId()));
+        secretary.setName(secretaryDto.getName());
+        secretary.setPhone(secretaryDto.getPhone());
+        secretary.setEmail(secretaryDto.getEmail());
+        secretaryRepository.save(secretary);
+        secretaryDto.setOfficeId(secretary.getOffice().getId());
+        secretaryDto.setName(secretary.getName());
+        secretaryDto.setPhone(secretary.getPhone());
+        secretaryDto.setEmail(secretary.getEmail());
+        return secretaryDto;
+    }
+
+    /**
+     * Updates a Secretary entity by its ID.
+     *
+     * @param id the ID of the Secretary entity to update
+     * @param secretaryDto the updated Secretary DTO
+     * @return the updated Secretary DTO
+     */
+    public AddSecretaryDto updateSecretaryDto(Long id, AddSecretaryDto secretaryDto) {
+        Secretary secretary = new Secretary();
+        secretary.setId(id);
+        secretary.setOffice(officeRepository.getReferenceById(secretaryDto.getOfficeId()));
         secretary.setName(secretaryDto.getName());
         secretary.setPhone(secretaryDto.getPhone());
         secretary.setEmail(secretaryDto.getEmail());
@@ -94,9 +119,10 @@ public class SecretaryService {
      * Performs a logical deletion of a Secretary entity by its ID.
      *
      * @param id the ID of the Secretary entity to delete
+     * @return the deleted Secretary DTO
      * @throws ResponseStatusNotFoundException if the Secretary entity with the specified ID is not found
      */
-    public void logicalDeleteSecretaryById(Long id) throws ResponseStatusNotFoundException {
+    public GetSecretaryDto logicalDeleteSecretaryById(Long id) throws ResponseStatusNotFoundException {
         Optional<Secretary> optionalSecretary = secretaryRepository.findById(id);
         Secretary secretary;
 
@@ -108,5 +134,7 @@ public class SecretaryService {
 
         secretary.setStatus(StatusEnum.DELETED);
         secretaryRepository.save(secretary);
+        return new GetSecretaryDto(secretary.getName(), secretary.getOffice().getOfficeName(),
+                secretary.getPhone(), secretary.getEmail());
     }
 }

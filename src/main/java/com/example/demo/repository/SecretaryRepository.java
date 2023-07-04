@@ -9,6 +9,13 @@ import java.util.List;
 
 @Repository
 public interface SecretaryRepository extends JpaRepository<Secretary, Long> {
-    @Query("SELECT * FROM secretary WHERE status = 'ACTIVE'")
+
+    /**
+     * Retrieves all active Secretary entities.
+     *
+     * @return a list of all active Secretary entities
+     */
+    @Query("SELECT s FROM Secretary s WHERE s.status = 'ACTIVE'")
     List<Secretary> findAllAndActive();
 }
+

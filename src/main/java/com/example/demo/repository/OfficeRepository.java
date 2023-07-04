@@ -28,4 +28,11 @@ public interface OfficeRepository extends JpaRepository<Office, Long> {
     @SQLDelete(sql = "DELETE FROM office o WHERE o.name = :name")
     void deleteByName(@Param("name") String name);
 
+    /**
+     * Retrieves a reference to an office by its ID.
+     *
+     * @param id the ID of the office
+     * @return a reference to the office with the specified ID
+     */
+    Office getReferenceById(Long id);
 }

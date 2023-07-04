@@ -4,7 +4,7 @@ package com.example.demo.service;
 import com.example.demo.dto.office.GetOfficeDto;
 import com.example.demo.entity.Office;
 import com.example.demo.enums.StatusEnum;
-import com.example.demo.exeption.ResponseStatusNotFoundException;
+import com.example.demo.exception.ResponseStatusNotFoundException;
 import com.example.demo.repository.OfficeRepository;
 
 

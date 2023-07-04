@@ -2,12 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.secretary.AddSecretaryDto;
 import com.example.demo.dto.secretary.GetSecretaryDto;
-import com.example.demo.entity.Secretary;
-import com.example.demo.exeption.ResponseStatusNotFoundException;
-import com.example.demo.service.OfficeService;
+import com.example.demo.exception.ResponseStatusNotFoundException;
 import com.example.demo.service.SecretaryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,13 +25,23 @@ public class SecretaryController {
     }
 
     @GetMapping("/{id}")
-    public GetSecretaryDto getSecretaryDto(@PathVariable Long id) throws ResponseStatusNotFoundException {
+    public GetSecretaryDto getSecretary(@PathVariable Long id) throws ResponseStatusNotFoundException {
         return secretaryService.findById(id);
     }
 
     @PostMapping
-    public AddSecretaryDto addSecretaryDto(@RequestBody AddSecretaryDto secretaryDto) throws ResponseStatusNotFoundException {
+    public AddSecretaryDto addSecretary(@RequestBody AddSecretaryDto secretaryDto) throws ResponseStatusNotFoundException {
         return secretaryService.addSecretaryDto(secretaryDto);
 
+    }
+
+    @PostMapping("/{id}")
+    public AddSecretaryDto updateSecretary(@PathVariable Long id, @RequestBody AddSecretaryDto secretaryDto) {
+        return secretaryService.updateSecretaryDto(id, secretaryDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public GetSecretaryDto logicalDeleteSecretary(@PathVariable Long id) throws ResponseStatusNotFoundException {
+        return secretaryService.logicalDeleteSecretaryById(id);
     }
 }

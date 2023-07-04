@@ -4,7 +4,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.office.GetOfficeDto;
 import com.example.demo.entity.Address;
 import com.example.demo.entity.Office;
-import com.example.demo.exeption.ResponseStatusNotFoundException;
+import com.example.demo.exception.ResponseStatusNotFoundException;
 import com.example.demo.service.OfficeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/office")
