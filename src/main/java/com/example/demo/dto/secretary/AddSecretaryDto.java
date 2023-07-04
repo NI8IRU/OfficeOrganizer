@@ -1,10 +1,6 @@
 package com.example.demo.dto.secretary;
 
-import com.example.demo.entity.Office;
-import jakarta.persistence.Column;
-import jakarta.persistence.OneToOne;
-
-public class CreateSecretaryDto {
+public class AddSecretaryDto {
 
     private Long officeId;
     private String name;

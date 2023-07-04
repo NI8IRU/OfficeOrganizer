@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.secretary.AddSecretaryDto;
+import com.example.demo.dto.secretary.GetSecretaryDto;
 import com.example.demo.entity.Secretary;
 import com.example.demo.enums.StatusEnum;
 import com.example.demo.exeption.ResponseStatusNotFoundException;
@@ -7,6 +9,7 @@ import com.example.demo.repository.SecretaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +19,7 @@ import java.util.Optional;
 @Service
 public class SecretaryService {
     private SecretaryRepository secretaryRepository;
+    private OfficeService officeService;
 
     /**
      * Constructs a new SecretaryService with the specified SecretaryRepository.
@@ -23,8 +27,9 @@ public class SecretaryService {
      * @param secretaryRepository the SecretaryRepository to be used
      */
     @Autowired
-    public SecretaryService(SecretaryRepository secretaryRepository) {
+    public SecretaryService(SecretaryRepository secretaryRepository, OfficeService officeService) {
         this.secretaryRepository = secretaryRepository;
+        this.officeService = officeService;
     }
 
     /**
@@ -32,8 +37,14 @@ public class SecretaryService {
      *
      * @return a list of all Secretary entities
      */
-    public List<Secretary> findAll() {
-        return secretaryRepository.findAllAndActive();
+    public List<GetSecretaryDto> findAll() {
+        List<Secretary> secretaryList = secretaryRepository.findAll();
+        List<GetSecretaryDto> secretaryDtoList = new ArrayList<>();
+        for (Secretary secretary : secretaryList) {
+            secretaryDtoList.add(new GetSecretaryDto(secretary.getName(), secretary.getOffice().getOfficeName(),
+                    secretary.getPhone(), secretary.getEmail()));
+        }
+        return secretaryDtoList;
     }
 
     /**
@@ -42,19 +53,21 @@ public class SecretaryService {
      * @param id the ID of the Secretary entity to retrieve
      * @return the Secretary entity with the specified ID
      */
-    public Secretary findById(Long id) throws ResponseStatusNotFoundException {
+    public GetSecretaryDto findById(Long id) throws ResponseStatusNotFoundException {
         Optional<Secretary> optionalSecretary = secretaryRepository.findById(id);
-        Secretary secretary;
 
         if (optionalSecretary.isPresent()) {
-            secretary = optionalSecretary.get();
+            Secretary secretary = optionalSecretary.get();
+            GetSecretaryDto secretaryDto = new GetSecretaryDto(secretary.getName(), secretary.getOffice().getOfficeName(),
+                                                               secretary.getPhone(), secretary.getEmail());
+            if (secretary.getStatus() == StatusEnum.ACTIVE) {
+                return secretaryDto;
+            } else throw new ResponseStatusNotFoundException("Secretary is not active!");
+
         } else {
             throw new ResponseStatusNotFoundException("Secretary not found!");
         }
 
-        if (secretary.getStatus() == StatusEnum.ACTIVE) {
-            return secretary;
-        } else throw new ResponseStatusNotFoundException("Secretary is not active!");
     }
 
     /**
@@ -62,8 +75,19 @@ public class SecretaryService {
      *
      * @param secretary the Secretary entity to add
      */
-    public void addSecretary(Secretary secretary) {
+    public AddSecretaryDto addSecretaryDto(AddSecretaryDto secretaryDto) throws ResponseStatusNotFoundException {
+
+        Secretary secretary = new Secretary();
+        secretary.setOffice(officeService.findById(secretaryDto.getOfficeId()));
+        secretary.setName(secretaryDto.getName());
+        secretary.setPhone(secretaryDto.getPhone());
+        secretary.setEmail(secretaryDto.getEmail());
         secretaryRepository.save(secretary);
+        secretaryDto.setOfficeId(secretary.getOffice().getId());
+        secretaryDto.setName(secretary.getName());
+        secretaryDto.setPhone(secretary.getPhone());
+        secretaryDto.setEmail(secretary.getEmail());
+        return secretaryDto;
     }
 
     /**
