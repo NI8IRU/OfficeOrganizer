@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.enums.StatusEnum;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -27,6 +28,8 @@ public class Prenotation {
     private String description;
     @Column(name = "date")
     private Date date;
+    @Column(name = "status", columnDefinition = "ACTIVE")
+    private StatusEnum status;
 
     public Prenotation(Long id, Specialist specialist_id, User user_id, String description, Date date) {
         this.id = id;
@@ -78,5 +81,13 @@ public class Prenotation {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
     }
 }

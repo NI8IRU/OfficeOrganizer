@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dto.prenotation.CreatePrenotationDto;
 import com.example.demo.dto.prenotation.GetPrenotationDto;
 import com.example.demo.entity.Prenotation;
+import com.example.demo.enums.StatusEnum;
 import com.example.demo.exception.ResponseStatusNotFoundException;
 import com.example.demo.repository.OfficeRepository;
 import com.example.demo.repository.PrenotationRepository;
@@ -93,7 +94,20 @@ public class PrenotationService {
 
     }
 
-    public void deletePrenotationById(Long id) {
-        prenotationRepository.deleteById(id);
+    public GetPrenotationDto deletePrenotationById (Long id) throws ResponseStatusNotFoundException {
+
+        Optional<Prenotation> optionalPrenotation = prenotationRepository.findById(id);
+        Prenotation prenotation;
+
+        if(optionalPrenotation.isPresent()){
+            prenotation = optionalPrenotation.get();
+        } else {
+            throw new ResponseStatusNotFoundException("Prenotation not found!");
+        }
+
+        prenotation.setStatus(StatusEnum.DELETED);
+        prenotationRepository.save(prenotation);
+        return new GetPrenotationDto(prenotation.getSpecialist_id(), prenotation.getUser_id(),
+                prenotation.getDescription(), prenotation.getDate());
     }
 }
