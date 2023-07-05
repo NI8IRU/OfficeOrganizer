@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.enums.StatusEnum;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -29,6 +30,24 @@ public class User {
 
     @Column (name ="prenotation")
     private List<Prenotation> prenotations;
+    @Column(name = "status", columnDefinition = "ACTIVE")
+    private StatusEnum status;
+
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
+    }
+
+    public User(String name, String surname, String email, List<Prenotation> prenotations, StatusEnum status) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.prenotations = prenotations;
+        this.status = status;
+    }
 
     /**
      * @param user_id
@@ -37,13 +56,7 @@ public class User {
      * @param email
      * @param prenotations
      */
-    public User(Long user_id, String name, String surname, String email, List<Prenotation> prenotations) {
-        this.id = user_id;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.prenotations = prenotations;
-    }
+
     public User() {
     }
 

@@ -1,23 +1,18 @@
 package com.example.demo.dto.user;
 
 import com.example.demo.entity.Prenotation;
-import jakarta.persistence.Column;
 
 import java.util.List;
 
-public class addUserDto {
-    private Long id;
+public class GetUserDto {
     private String name;
     private String surname;
-    private String email;
     private List<Prenotation> prenotations;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public GetUserDto(String name, String surname, List<Prenotation> prenotations) {
+        this.name = name;
+        this.surname = surname;
+        this.prenotations = prenotations;
     }
 
     public String getName() {
@@ -34,14 +29,6 @@ public class addUserDto {
 
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public List<Prenotation> getPrenotations() {

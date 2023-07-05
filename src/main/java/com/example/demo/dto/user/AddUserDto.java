@@ -4,15 +4,19 @@ import com.example.demo.entity.Prenotation;
 
 import java.util.List;
 
-public class getUserDto {
+public class AddUserDto {
+    private Long id;
     private String name;
     private String surname;
-    private List<Prenotation> prenotations;
+    private String email;
 
-    public getUserDto(String name, String surname, List<Prenotation> prenotations) {
-        this.name = name;
-        this.surname = surname;
-        this.prenotations = prenotations;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -31,11 +35,12 @@ public class getUserDto {
         this.surname = surname;
     }
 
-    public List<Prenotation> getPrenotations() {
-        return prenotations;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPrenotations(List<Prenotation> prenotations) {
-        this.prenotations = prenotations;
+    public void setEmail(String email) {
+        this.email = email;
     }
+
 }
