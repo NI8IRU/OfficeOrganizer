@@ -54,6 +54,19 @@ public class SpecialistService {
          specialistDto.setType(specialist.getSpecialistType());
          specialistDto.setSpecialistRating(specialist.getRating());
          return specialistDto;
+
+    }
+    public AddSpecialistDto updateSpecialistDto(Long id,AddSpecialistDto specialistDto){
+        Specialist specialist=new Specialist();
+        specialist.setOfficeId(id);
+        specialist.setSpecialistName(specialistDto.getName());
+        specialist.setSpecialistType(specialistDto.getType());
+        specialist.setRating(specialistDto.getSpecialistRating());
+        specialistRepository.save(specialist);
+        specialistDto.setName(specialist.getSpecialistName());
+        specialistDto.setType(specialist.getSpecialistType());
+        specialistDto.setSpecialistRating(specialist.getRating());
+        return specialistDto;
     }
     public GetSpecialistDto logicalDeleteSpecialistById(Long id) throws ResponseStatusNotFoundException{
         Optional<Specialist>optionalSpecialist=specialistRepository.findById(id);
