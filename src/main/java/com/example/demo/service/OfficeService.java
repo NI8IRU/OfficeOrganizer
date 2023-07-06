@@ -24,7 +24,6 @@ public class OfficeService {
      * @param officeRepository OfficeRepo's instance
      */
     @Autowired
-
     public OfficeService(OfficeRepository officeRepository) {
         this.officeRepository = officeRepository;
     }

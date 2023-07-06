@@ -43,8 +43,8 @@ public class SecretaryService {
         List<Secretary> secretaryList = secretaryRepository.findAll();
         List<GetSecretaryDto> secretaryDtoList = new ArrayList<>();
         for (Secretary secretary : secretaryList) {
-            secretaryDtoList.add(new GetSecretaryDto(secretary.getName(), secretary.getOffice().getOfficeName(),
-                    secretary.getPhone(), secretary.getEmail()));
+            secretaryDtoList.add(new GetSecretaryDto(secretary.getName(),
+                    secretary.getPhone(), secretary.getEmail(), secretary.getOffice().getOfficeName()));
         }
         return secretaryDtoList;
     }
@@ -61,8 +61,8 @@ public class SecretaryService {
 
         if (optionalSecretary.isPresent()) {
             Secretary secretary = optionalSecretary.get();
-            GetSecretaryDto secretaryDto = new GetSecretaryDto(secretary.getName(), secretary.getOffice().getOfficeName(),
-                    secretary.getPhone(), secretary.getEmail());
+            GetSecretaryDto secretaryDto = new GetSecretaryDto(secretary.getName(), secretary.getPhone(),
+                                                               secretary.getEmail(), secretary.getOffice().getOfficeName());
             if (secretary.getStatus() == StatusEnum.ACTIVE) {
                 return secretaryDto;
             } else {
@@ -134,7 +134,7 @@ public class SecretaryService {
 
         secretary.setStatus(StatusEnum.DELETED);
         secretaryRepository.save(secretary);
-        return new GetSecretaryDto(secretary.getName(), secretary.getOffice().getOfficeName(),
-                secretary.getPhone(), secretary.getEmail());
+        return new GetSecretaryDto(secretary.getName(), secretary.getPhone(), secretary.getEmail(),
+                                   secretary.getOffice().getOfficeName());
     }
 }

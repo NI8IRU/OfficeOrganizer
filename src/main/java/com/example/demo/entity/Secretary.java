@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 @Table(name = "secretary")
 public class Secretary {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
     @OneToOne(mappedBy = "secretary")
