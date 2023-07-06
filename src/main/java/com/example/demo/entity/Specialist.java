@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.enums.StatusEnum;
 import jakarta.persistence.*;
 
   /**
@@ -25,6 +26,9 @@ public class Specialist {
 
     @Column(name = "rating")
     private Integer rating;
+    @Column(name = "status", columnDefinition = "ACTIVE")
+    private StatusEnum status;
+
 
     /**
      *
@@ -89,4 +93,16 @@ public class Specialist {
     public Integer getRating() {
         return rating;
     }
-}
+
+      public void setRating(Integer rating) {
+          this.rating = rating;
+      }
+
+      public StatusEnum getStatus() {
+          return status;
+      }
+
+      public void setStatus(StatusEnum status) {
+          this.status = status;
+      }
+  }
