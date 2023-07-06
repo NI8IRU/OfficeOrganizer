@@ -28,18 +28,12 @@ public class User {
 
     private String email;
 
-    @Column (name ="prenotation")
+    @Column(name = "prenotation")
     private List<Prenotation> prenotations;
     @Column(name = "status", columnDefinition = "ACTIVE")
-    private StatusEnum status;
+    private static StatusEnum status;
 
-    public StatusEnum getStatus() {
-        return status;
-    }
 
-    public void setStatus(StatusEnum status) {
-        this.status = status;
-    }
 
     public User(String name, String surname, String email, List<Prenotation> prenotations, StatusEnum status) {
         this.name = name;
@@ -55,6 +49,7 @@ public class User {
      * @param surname
      * @param email
      * @param prenotations
+     * @param staus
      */
 
     public User() {
@@ -98,5 +93,13 @@ public class User {
 
     public void setPrenotations(List<Prenotation> prenotations) {
         this.prenotations = prenotations;
+    }
+
+    public static StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
     }
 }

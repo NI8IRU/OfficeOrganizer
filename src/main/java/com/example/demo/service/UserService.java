@@ -1,9 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.secretary.GetSecretaryDto;
 import com.example.demo.dto.user.AddUserDto;
 import com.example.demo.dto.user.GetUserDto;
-import com.example.demo.entity.Secretary;
 import com.example.demo.entity.User;
 import com.example.demo.enums.StatusEnum;
 import com.example.demo.exception.ResponseStatusNotFoundException;
@@ -26,7 +24,7 @@ public class UserService {
         this.prenotationRepository = prenotationRepository;
     }
 
-    public AddUserDto addUser(AddUserDto addUserDto) {
+    public AddUserDto addUser( AddUserDto addUserDto) {
         User user = new User();
         user.setId(user.getId());
         user.setName(user.getName());
@@ -40,12 +38,27 @@ public class UserService {
         return addUserDto;
     }
 
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<GetUserDto> findAll() {
+        List<User>users=userRepository.findAll();
+List<GetUserDto>getUserDtoList=users.stream().map(user->new GetUserDto(user.getName()
+,user.getSurname(),user.getPrenotations())).toList();
+return getUserDtoList;
     }
 
-    public Optional<User> findByName(String name) {
-        return userRepository.getReferenceByName(name);
+    public GetUserDto findById(Long id) throws ResponseStatusNotFoundException {
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+          GetUserDto getUserDto = new GetUserDto(user.getName(), user.getSurname(),user.getPrenotations());
+            if (User.getStatus() == StatusEnum.ACTIVE) {
+                return getUserDto;
+            } else {
+                throw new ResponseStatusNotFoundException("User is off!");
+            }
+        } else {
+            throw new ResponseStatusNotFoundException("user unfinded!");
+        }
     }
 
     public void updateUser(Long id, AddUserDto addUserDto) {
