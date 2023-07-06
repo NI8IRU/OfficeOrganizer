@@ -29,7 +29,7 @@ public List<GetUserDto> usersFindAll(){return userService.findAll();}
     }
     @PutMapping("/{id}")
     public AddUserDto addUserDto(@PathVariable Long id, @RequestBody AddUserDto addUserDto) {
-        return userService.addUser(id,addUserDto);
+        return userService.updateUser(id,addUserDto);
     }
     @DeleteMapping("/{id}")
     public GetUserDto logicaldelite(@PathVariable Long id){

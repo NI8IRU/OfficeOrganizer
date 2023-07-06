@@ -61,7 +61,7 @@ return getUserDtoList;
         }
     }
 
-    public void updateUser(Long id, AddUserDto addUserDto) {
+    public AddUserDto updateUser(Long id, AddUserDto addUserDto) {
         userRepository.deletedById(id);
         User user = new User();
         addUserDto.setId(user.getId());
@@ -69,6 +69,11 @@ return getUserDtoList;
         addUserDto.setSurname(user.getSurname());
         addUserDto.setEmail(user.getEmail());
         userRepository.save(user);
+        addUserDto.setId(user.getId());
+        addUserDto.setName(user.getName());
+        addUserDto.setSurname(user.getSurname());
+        addUserDto.setEmail(user.getEmail());
+        return addUserDto;
     }
 
     public GetUserDto logicalDeleteSecretaryById(Long id) {
