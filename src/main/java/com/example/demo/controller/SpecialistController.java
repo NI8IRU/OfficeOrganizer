@@ -16,11 +16,11 @@ import java.util.List;
         public SpecialistController(SpecialistService specialistService){
             this.specialistService=specialistService;
         }
-        @PostMapping()
+        @PostMapping("/add")
         public AddSpecialistDto addSpecialist(@RequestBody AddSpecialistDto specialistDto)throws ResponseStatusNotFoundException {
             return specialistService.addSpecialistDto(specialistDto);
         }
-        @GetMapping
+        @GetMapping("/specialists")
         public List<GetSpecialistDto> readAll(){
             return specialistService.findAll();
         }
