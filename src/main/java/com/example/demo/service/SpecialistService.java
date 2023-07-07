@@ -57,6 +57,7 @@ public class SpecialistService {
     }
     public AddSpecialistDto updateSpecialistDto(Long id,AddSpecialistDto specialistDto){
         Specialist specialist=new Specialist();
+        //TODO fix
 //        specialist.setOffice(id);
         specialist.setSpecialistName(specialistDto.getName());
         specialist.setSpecialistType(specialistDto.getType());
