@@ -18,20 +18,16 @@ import java.util.List;
 public class OfficeController {
 
     private final OfficeService officeService;
-    private Address address;
 
     @Autowired
-    public OfficeController(OfficeService officeService, Address address) {
+    public OfficeController(OfficeService officeService) {
         this.officeService = officeService;
-        this.address = address;
+
     }
 
 
-
-
-
     @GetMapping
-    public List<GetOfficeDto> readAllOffices(){
+    public List<GetOfficeDto> readAllOffices() {
 
         List<Office> officeList = officeService.findAllOffices();
         List<GetOfficeDto> officeDto = new ArrayList<>();
@@ -54,7 +50,7 @@ public class OfficeController {
 
 
     @PostMapping
-    public ResponseEntity<?> createOfficeDto(@RequestBody GetOfficeDto getOfficeDto){
+    public ResponseEntity<?> createOfficeDto(@RequestBody GetOfficeDto getOfficeDto) {
 
 
         officeService.addOffice(getOfficeDto);
@@ -63,6 +59,14 @@ public class OfficeController {
     }
 
 
+    @DeleteMapping("/logicalDelete/{name}")
+    public ResponseEntity<?> logicalDeleteByOfficeName(@PathVariable String name) throws ResponseStatusNotFoundException {
+
+
+        officeService.logicalDeleteOfficeByName(name);
+
+        return ResponseEntity.ok().body("office deleted !");
+    }
 
 
 }

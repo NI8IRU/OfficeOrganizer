@@ -4,7 +4,6 @@ package com.example.demo.service;
 import com.example.demo.dto.address.AddAddressDto;
 import com.example.demo.dto.address.GetAddressDto;
 import com.example.demo.entity.Address;
-import com.example.demo.entity.Office;
 import com.example.demo.exception.ResponseStatusNotFoundException;
 import com.example.demo.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +83,7 @@ public class AddressService {
 
 
 
-    public void AddAddress(AddAddressDto address) throws ResponseStatusNotFoundException {
+    public void addAddress(AddAddressDto address) throws ResponseStatusNotFoundException {
 
         if(address != null){
             Address address1 = new Address();
