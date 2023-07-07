@@ -51,7 +51,7 @@ return getUserDtoList;
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
           GetUserDto getUserDto = new GetUserDto(user.getName(), user.getSurname(),user.getPrenotations());
-            if (User.getStatus() == StatusEnum.ACTIVE) {
+            if (user.getStatus() == StatusEnum.ACTIVE) {
                 return getUserDto;
             } else {
                 throw new ResponseStatusNotFoundException("User is off!");

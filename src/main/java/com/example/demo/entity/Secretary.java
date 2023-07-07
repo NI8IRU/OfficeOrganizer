@@ -13,8 +13,8 @@ public class Secretary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @OneToOne(mappedBy = "secretary")
-    @PrimaryKeyJoinColumn(name = "office_id")
+    @OneToOne
+    @JoinColumn(name = "id_office")
     private Office office;
     @Column(name = "secretary_name")
     private String name;
@@ -22,7 +22,8 @@ public class Secretary {
     private String phone;
     @Column(name = "email")
     private String email;
-    @Column(name = "status", columnDefinition = "ACTIVE")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private StatusEnum status;
 
     /**

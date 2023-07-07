@@ -13,28 +13,28 @@ public class Prenotation {
      */
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "specialist_id", referencedColumnName = "id")
     private Specialist specialist_id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user_id;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "description")
-
     private String description;
     @Column(name = "date")
     private Date date;
-    @Column(name = "status", columnDefinition = "ACTIVE")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private StatusEnum status;
 
-    public Prenotation(Long id, Specialist specialist_id, User user_id, String description, Date date) {
+    public Prenotation(Long id, Specialist specialist_id, User user, String description, Date date) {
         this.id = id;
         this.specialist_id = specialist_id;
-        this.user_id = user_id;
+        this.user = user;
         this.description = description;
         this.date = date;
     }
@@ -59,12 +59,12 @@ public class Prenotation {
         this.specialist_id = specialist_id;
     }
 
-    public User getUser_id() {
-        return user_id;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser_id(User user_id) {
-        this.user_id = user_id;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getDescription() {

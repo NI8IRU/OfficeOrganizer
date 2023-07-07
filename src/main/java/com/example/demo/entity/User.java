@@ -14,27 +14,33 @@ public class User {
      * Represents client
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
     private String name;
 
     @Column(name = "surname")
-
     private String surname;
 
     @Column(name = "email")
-
     private String email;
 
-    @Column(name = "prenotation")
+    @OneToMany(mappedBy = "prenotation")
     private List<Prenotation> prenotations;
-    @Column(name = "status", columnDefinition = "ACTIVE")
-    private static StatusEnum status;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private StatusEnum status;
 
 
 
+    /**
+     * @param name
+     * @param surname
+     * @param email
+     * @param prenotations
+     * @param status
+     */
     public User(String name, String surname, String email, List<Prenotation> prenotations, StatusEnum status) {
         this.name = name;
         this.surname = surname;
@@ -43,14 +49,6 @@ public class User {
         this.status = status;
     }
 
-    /**
-     * @param user_id
-     * @param name
-     * @param surname
-     * @param email
-     * @param prenotations
-     * @param staus
-     */
 
     public User() {
     }
@@ -95,7 +93,7 @@ public class User {
         this.prenotations = prenotations;
     }
 
-    public static StatusEnum getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 

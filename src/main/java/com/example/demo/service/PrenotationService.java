@@ -5,7 +5,6 @@ import com.example.demo.dto.prenotation.GetPrenotationDto;
 import com.example.demo.entity.Prenotation;
 import com.example.demo.enums.StatusEnum;
 import com.example.demo.exception.ResponseStatusNotFoundException;
-import com.example.demo.repository.OfficeRepository;
 import com.example.demo.repository.PrenotationRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,7 @@ public class PrenotationService {
 
         for(Prenotation prenotation : prenotationList){
             prenotationDtoList.add(new GetPrenotationDto(prenotation.getSpecialist_id(),
-                    prenotation.getUser_id(), prenotation.getDescription(), prenotation.getDate()));
+                    prenotation.getUser(), prenotation.getDescription(), prenotation.getDate()));
         }
 
         return prenotationDtoList;
@@ -45,7 +44,7 @@ public class PrenotationService {
 
         if(optionalPrenotation.isPresent()){
             Prenotation prenotation = optionalPrenotation.get();
-            GetPrenotationDto prenotationDto = new GetPrenotationDto(prenotation.getSpecialist_id(), prenotation.getUser_id(),
+            GetPrenotationDto prenotationDto = new GetPrenotationDto(prenotation.getSpecialist_id(), prenotation.getUser(),
                     prenotation.getDescription(), prenotation.getDate());
             return prenotationDto;
         } else {
@@ -59,14 +58,14 @@ public class PrenotationService {
 
         prenotation.setId(prenotationDto.getId());
         prenotation.setSpecialist_id(prenotationDto.getSpecialist_id());
-        prenotation.setUser_id(userRepository.getReferenceById(prenotationDto.getId()));
+        prenotation.setUser(userRepository.getReferenceById(prenotationDto.getId()));
         prenotation.setDescription(prenotationDto.getDescription());
         prenotation.setDate(prenotationDto.getDate());
         prenotationRepository.save(prenotation);
 
         prenotationDto.setId(prenotation.getId());
         prenotationDto.setSpecialist_id(prenotation.getSpecialist_id());
-        prenotationDto.setUser_id(prenotation.getUser_id());
+        prenotationDto.setUser_id(prenotation.getUser());
         prenotationDto.setDescription(prenotation.getDescription());
         prenotationDto.setDate(prenotation.getDate());
 
@@ -79,14 +78,14 @@ public class PrenotationService {
 
         prenotation.setId(id);
         prenotation.setSpecialist_id(prenotationDto.getSpecialist_id());
-        prenotation.setUser_id(userRepository.getReferenceById(prenotationDto.getId()));
+        prenotation.setUser(userRepository.getReferenceById(prenotationDto.getId()));
         prenotation.setDescription(prenotationDto.getDescription());
         prenotation.setDate(prenotationDto.getDate());
         prenotationRepository.save(prenotation);
 
         prenotationDto.setId(prenotation.getId());
         prenotationDto.setSpecialist_id(prenotation.getSpecialist_id());
-        prenotationDto.setUser_id(prenotation.getUser_id());
+        prenotationDto.setUser_id(prenotation.getUser());
         prenotationDto.setDescription(prenotation.getDescription());
         prenotationDto.setDate(prenotation.getDate());
 
@@ -107,7 +106,7 @@ public class PrenotationService {
 
         prenotation.setStatus(StatusEnum.DELETED);
         prenotationRepository.save(prenotation);
-        return new GetPrenotationDto(prenotation.getSpecialist_id(), prenotation.getUser_id(),
+        return new GetPrenotationDto(prenotation.getSpecialist_id(), prenotation.getUser(),
                 prenotation.getDescription(), prenotation.getDate());
     }
 }

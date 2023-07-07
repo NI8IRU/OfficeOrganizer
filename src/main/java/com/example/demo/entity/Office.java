@@ -20,7 +20,7 @@ public class Office {
      * Primary Key, auto_incrementer
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "office_name")
     private String officeName;
@@ -40,7 +40,8 @@ public class Office {
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
     private Double rating;
-    @Column(name = "status", columnDefinition = "ACTIVE")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private StatusEnum status;
 
 

@@ -11,11 +11,11 @@ import jakarta.persistence.*;
   @Table(name = "specialist")
 public class Specialist {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "id_office", referencedColumnName = "id")
-    private Long officeId;
+    private Office office;
 
     @Column(name = "specialist_name")
 
@@ -26,22 +26,23 @@ public class Specialist {
 
     @Column(name = "rating")
     private Integer rating;
-    @Column(name = "status", columnDefinition = "ACTIVE")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private StatusEnum status;
 
 
     /**
      *
      * @param id id and primary key of Specialist
-     * @param officeId office assigned to a Specialist (Foreign key of Prenotation)
+     * @param office office assigned to a Specialist (Foreign key of Prenotation)
      * @param specialistName Name of the Specialist
      * @param specialistType Specialized job or mansion
      * @param rating work score of Specialist
      */
 
-    public Specialist(Long id, Long officeId, String specialistName, String specialistType, Integer rating) {
+    public Specialist(Long id, Office office, String specialistName, String specialistType, Integer rating) {
         this.id = id;
-        this.officeId = officeId;
+        this.office = office;
         this.specialistName = specialistName;
         this.specialistType = specialistType;
         this.rating = rating;
@@ -66,12 +67,12 @@ public class Specialist {
         this.id = id;
     }
 
-    public Long getOfficeId() {
-        return officeId;
+    public Office getOffice() {
+        return office;
     }
 
-    public void setOfficeId(Long officeId) {
-        this.officeId = officeId;
+    public void setOffice(Office office) {
+        this.office = office;
     }
 
     public String getSpecialistName() {

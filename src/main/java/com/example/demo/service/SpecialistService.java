@@ -5,7 +5,6 @@ import com.example.demo.dto.specialist.GetSpecialistDto;
 import com.example.demo.entity.Specialist;
 import com.example.demo.enums.StatusEnum;
 import com.example.demo.exception.ResponseStatusNotFoundException;
-import com.example.demo.repository.OfficeRepository;
 import com.example.demo.repository.SpecialistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,7 +57,7 @@ public class SpecialistService {
     }
     public AddSpecialistDto updateSpecialistDto(Long id,AddSpecialistDto specialistDto){
         Specialist specialist=new Specialist();
-        specialist.setOfficeId(id);
+//        specialist.setOffice(id);
         specialist.setSpecialistName(specialistDto.getName());
         specialist.setSpecialistType(specialistDto.getType());
         specialist.setRating(specialistDto.getSpecialistRating());

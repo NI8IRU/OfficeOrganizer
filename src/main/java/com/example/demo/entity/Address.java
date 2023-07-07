@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 @Entity
 public class Address {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String street;
 
@@ -16,7 +16,7 @@ public class Address {
     private String city;
     private String additionalInformation;
     @OneToOne
-    @PrimaryKeyJoinColumn(name = "office_id")
+    @JoinColumn(name = "office_id")
     private Office office;
 
 
