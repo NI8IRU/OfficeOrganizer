@@ -134,9 +134,14 @@ public class OfficeService {
      */
     public void deleteOfficeByName(String name) {
 
-        if (officeRepository.getReferenceByName(name).isPresent()) {
+
+         Optional<Office> optionalOffice = officeRepository.getReferenceByName(name);
+        if (optionalOffice.isPresent()) {
 
             officeRepository.deleteByName(name);
+        }else{
+
+            throw new NullPointerException("The name seems to be null!");
         }
 
     }

@@ -3,10 +3,10 @@ package com.example.demo.dto.office;
 
 import java.util.List;
 
-public class CreateOfficeDto {
+public class AddOfficeDto {
 
 
-    private Long id;
+
     private String officeName;
     private String secretary;
     private List<String> specialists;
@@ -20,7 +20,7 @@ public class CreateOfficeDto {
     private Double rating;
 
 
-    public CreateOfficeDto(String officeName, String secretary, List<String> specialists, String phone, String email, String address, Double rating) {
+    public AddOfficeDto(String officeName, String secretary, List<String> specialists, String phone, String email, String address, Double rating) {
         this.officeName = officeName;
         this.secretary = secretary;
         this.specialists = specialists;
@@ -31,16 +31,9 @@ public class CreateOfficeDto {
     }
 
 
-    public CreateOfficeDto() {
+    public AddOfficeDto() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getOfficeName() {
         return officeName;

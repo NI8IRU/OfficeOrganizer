@@ -21,7 +21,7 @@ public interface OfficeRepository extends JpaRepository<Office, Long> {
    Optional <Office> getReferenceByName(@Param("name") String name);
 
     /**
-     * Delete the office according to its id
+     * Delete the office according to its name
      *
      * @param name Office's name
      */

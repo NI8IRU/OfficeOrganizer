@@ -3,7 +3,7 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 /**
- *It helps to set the office's address
+ * It helps to set the office's address
  */
 @Entity
 public class Address {
@@ -11,9 +11,8 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String street;
-    private String district;
-    private Integer houseNumber;
-    private Integer cap;
+
+    private Integer postalCode;
     private String city;
     private String additionalInformation;
     @OneToOne
@@ -22,20 +21,15 @@ public class Address {
 
 
     /**
-     *
-     * @param street the street near the office
-     * @param district the district where its located the office
-     * @param houseNumber office's house number
-     * @param cap   office's cap
-     * @param city city where its located the office
+     * @param street                the street near the office
+     * @param postalCode            office's cap
+     * @param city                  city where its located the office
      * @param additionalInformation additional info about the office
-     * @param office office in this address
+     * @param office                office in this address
      */
-    public Address(String street, String district, Integer houseNumber, Integer cap, String city, String additionalInformation, Office office) {
+    public Address(String street, Integer postalCode, String city, String additionalInformation, Office office) {
         this.street = street;
-        this.district = district;
-        this.houseNumber = houseNumber;
-        this.cap = cap;
+        this.postalCode = postalCode;
         this.city = city;
         this.additionalInformation = additionalInformation;
         this.office = office;
@@ -44,10 +38,10 @@ public class Address {
     /**
      * Empty constructor
      */
-    public Address() {}
+    public Address() {
+    }
 
     /**
-     *
      * @return id
      */
     public Long getId() {
@@ -56,6 +50,7 @@ public class Address {
 
     /**
      * Setter for the id
+     *
      * @param id id
      */
     public void setId(Long id) {
@@ -63,7 +58,6 @@ public class Address {
     }
 
     /**
-     *
      * @return the street where the office its located
      */
     public String getStreet() {
@@ -72,6 +66,7 @@ public class Address {
 
     /**
      * Setter for th office's street
+     *
      * @param street office's street
      */
 
@@ -81,58 +76,23 @@ public class Address {
 
 
     /**
-     *
-     * @return the district where the office its located
-     */
-    public String getDistrict() {
-        return district;
-    }
-
-    /**
-     * Setter for the district
-     * @param district office's district
-     */
-
-    public void setDistrict(String district) {
-        this.district = district;
-    }
-
-
-    /**
-     *
-     * @return office's house number
-     */
-    public Integer getHouseNumber() {
-        return houseNumber;
-    }
-
-    /**
-     * Setter for the office's house number
-     * @param houseNumber office's house number
-     */
-    public void setHouseNumber(Integer houseNumber) {
-        this.houseNumber = houseNumber;
-    }
-
-    /**
-     *
      * @return office's cap
      */
-    public Integer getCap() {
-        return cap;
+    public Integer getPostalCode() {
+        return postalCode;
     }
 
     /**
      * Setter for the office's cap
-     * @param cap office's cap
+     *
+     * @param postalCode office's cap
      */
 
-    public void setCap(Integer cap) {
-        this.cap = cap;
+    public void setPostalCode(Integer postalCode) {
+        this.postalCode = postalCode;
     }
 
     /**
-     *
      * @return the city where the office its located
      */
 
@@ -142,6 +102,7 @@ public class Address {
 
     /**
      * Setter for the city where the office its located
+     *
      * @param city city where the office its located
      */
 
@@ -150,7 +111,6 @@ public class Address {
     }
 
     /**
-     *
      * @return additional info about the office
      */
     public String getAdditionalInformation() {
@@ -159,6 +119,7 @@ public class Address {
 
     /**
      * Setter for office's additional info
+     *
      * @param additionalInformation additional info about the office
      */
     public void setAdditionalInformation(String additionalInformation) {
