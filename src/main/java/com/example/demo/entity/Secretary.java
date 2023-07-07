@@ -14,7 +14,7 @@ public class Secretary {
     @Column(name = "id")
     private Long id;
     @OneToOne(mappedBy = "secretary")
-    @Column(name = "office_id")
+    @PrimaryKeyJoinColumn(name = "office_id")
     private Office office;
     @Column(name = "secretary_name")
     private String name;

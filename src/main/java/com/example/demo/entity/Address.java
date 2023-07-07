@@ -17,7 +17,7 @@ public class Address {
     private String city;
     private String additionalInformation;
     @OneToOne
-    @Column(name = "office_id")
+    @PrimaryKeyJoinColumn(name = "office_id")
     private Office office;
 
 
