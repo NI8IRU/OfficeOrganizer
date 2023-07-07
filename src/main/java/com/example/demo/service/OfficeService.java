@@ -127,18 +127,99 @@ public class OfficeService {
 
     }
 
+
     /**
-     * Delete the office according to its name
+     *
+     * This method delete logically the office, not physically, according to its id;
+     * perhaps the office it's still in the database but its status is
+     * "deleted"
+     *
+     * @param id office's ide
+     * @return a new GetOfficeDto with datas updtated
+     * @throws ResponseStatusNotFoundException if the office isn't found
+     */
+    public GetOfficeDto logicalDeleteOfficeById(Long id) throws ResponseStatusNotFoundException {
+        Optional<Office> optionalOffice = officeRepository.findById(id);
+        Office office1;
+
+        if (optionalOffice.isPresent()) {
+            office1 = optionalOffice.get();
+        } else {
+            throw new ResponseStatusNotFoundException("Secretary not found!");
+        }
+
+        office1.setStatus(StatusEnum.DELETED);
+        officeRepository.save(office1);
+       return new GetOfficeDto(office1.getOfficeName(), office1.getSecretary(), office1.getSpecialists(), office1.getPhone(),
+                office1.getEmail(), office1.getAddress(), office1.getRating(), office1.getStatus());
+    }
+
+
+    /**
+     * This method delete logically the office , not physically, according to its id;
+     * perhaps the office it's still in the database but its status is
+     * "deleted"
+     *
+     * @param name office's name
+     * @return a new GetOfficeDto with datas updtated
+     * @throws ResponseStatusNotFoundException if the office isn't found
+     */
+        public GetOfficeDto logicalDeleteOfficeByName(String name) throws ResponseStatusNotFoundException {
+        Optional<Office> optionalOffice = officeRepository.getReferenceByName(name);
+        Office office1;
+
+        if (optionalOffice.isPresent()) {
+            office1 = optionalOffice.get();
+        } else {
+            throw new ResponseStatusNotFoundException("Office not found !");
+        }
+
+        office1.setStatus(StatusEnum.DELETED);
+        officeRepository.save(office1);
+        return new GetOfficeDto(office1.getOfficeName(), office1.getSecretary(), office1.getSpecialists(), office1.getPhone(),
+                office1.getEmail(), office1.getAddress(), office1.getRating(), office1.getStatus());
+    }
+
+    /**
+     * Delete physically the office according to its name
      *
      * @param name Office's name
      */
-    public void deleteOfficeByName(String name) {
+    public void physicalDeleteOfficeByName(String name) {
 
-        if (officeRepository.getReferenceByName(name).isPresent()) {
+
+         Optional<Office> optionalOffice = officeRepository.getReferenceByName(name);
+        if (optionalOffice.isPresent()) {
 
             officeRepository.deleteByName(name);
+        }else{
+
+            throw new NullPointerException("The name seems to be null!");
         }
 
     }
+
+    /**
+     * This method delete physically the office
+     *  according to its id !
+     *
+     * @param id office's id
+     * @throws NullPointerException if the id it's null!
+     */
+
+    public void physicalDeleteOfficeById(Long id) {
+
+
+        Optional<Office> optionalOffice = officeRepository.findById(id);
+        if (optionalOffice.isPresent()) {
+
+            officeRepository.deleteById(id);
+        }else{
+
+            throw new NullPointerException("The id seems to be null!");
+        }
+
+    }
+
 
 }

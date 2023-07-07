@@ -1,7 +1,8 @@
 package com.example.demo.dto.address;
 
+import com.example.demo.entity.Office;
 
-public class GetAddressDto {
+public class AddAddressDto {
 
     private Long id;
     private String street;
@@ -9,7 +10,7 @@ public class GetAddressDto {
     private Integer postalCode;
     private String city;
     private String additionalInformation;
-    private String office;
+    private Office office;
 
 
     /**
@@ -19,7 +20,7 @@ public class GetAddressDto {
      * @param additionalInformation additional info about the office
      * @param office                office in this address
      */
-    public GetAddressDto(String street, Integer postalCode, String city, String additionalInformation, String office) {
+    public AddAddressDto(String street, Integer postalCode, String city, String additionalInformation, Office office) {
         this.street = street;
         this.postalCode = postalCode;
         this.city = city;
@@ -30,7 +31,7 @@ public class GetAddressDto {
     /**
      * Empty constructor
      */
-    public GetAddressDto() {
+    public AddAddressDto() {
     }
 
     /**
@@ -118,11 +119,11 @@ public class GetAddressDto {
         this.additionalInformation = additionalInformation;
     }
 
-    public String getOffice() {
+    public Office getOffice() {
         return office;
     }
 
-    public void setOffice(String office) {
+    public void setOffice(Office office) {
         this.office = office;
     }
 }

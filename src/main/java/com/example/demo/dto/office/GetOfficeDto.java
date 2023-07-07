@@ -26,7 +26,8 @@ public class GetOfficeDto {
     public GetOfficeDto() {
     }
 
-    public GetOfficeDto(String officeName, Secretary secretary, List<Specialist> specialists, String phone, String email, Address address, Double rating, StatusEnum status) {
+    public GetOfficeDto(String officeName, Secretary secretary, List<Specialist> specialists,
+                        String phone, String email, Address address, Double rating, StatusEnum status) {
         this.officeName = officeName;
         this.secretary = secretary;
         this.specialists = specialists;
