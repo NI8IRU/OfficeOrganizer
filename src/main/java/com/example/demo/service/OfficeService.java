@@ -36,7 +36,7 @@ public class OfficeService {
 
     public GetOfficeDto getOfficeByName(String name) {
 
-        Optional<Office> optionalOffice = officeRepository.getReferenceByName(name);
+        Optional<Office> optionalOffice = officeRepository.getReferenceByofficeName(name);
 
 
         if (optionalOffice.isPresent()) {
@@ -165,7 +165,7 @@ public class OfficeService {
      * @throws ResponseStatusNotFoundException if the office isn't found
      */
         public GetOfficeDto logicalDeleteOfficeByName(String name) throws ResponseStatusNotFoundException {
-        Optional<Office> optionalOffice = officeRepository.getReferenceByName(name);
+        Optional<Office> optionalOffice = officeRepository.getReferenceByofficeName(name);
         Office office1;
 
         if (optionalOffice.isPresent()) {
@@ -188,10 +188,10 @@ public class OfficeService {
     public void physicalDeleteOfficeByName(String name) {
 
 
-         Optional<Office> optionalOffice = officeRepository.getReferenceByName(name);
+         Optional<Office> optionalOffice = officeRepository.getReferenceByofficeName(name);
         if (optionalOffice.isPresent()) {
 
-            officeRepository.deleteByName(name);
+            officeRepository.deleteByofficeName(name);
         }else{
 
             throw new NullPointerException("The name seems to be null!");

@@ -26,9 +26,9 @@ public class AddressService {
 
 
 
-    public GetAddressDto getAddressByname(String name) throws ResponseStatusNotFoundException {
+    public GetAddressDto getAddressByStreetName(String street) throws ResponseStatusNotFoundException {
 
-        Optional<Address> optionalAddress = addressRepository.getReferenceByName(name);
+        Optional<Address> optionalAddress = addressRepository.getReferenceByStreet(street);
 
         if(optionalAddress.isPresent()){
 
@@ -103,11 +103,11 @@ public class AddressService {
 
     public void deleteAddressByName(String name) {
 
-        Optional<Address> address = addressRepository.getReferenceByName(name);
+        Optional<Address> address = addressRepository.getReferenceByStreet(name);
 
         if(address.isPresent()){
 
-            addressRepository.deleteByName(name);
+            addressRepository.deleteByStreet(name);
         } else{
 
             throw new NullPointerException("The name seems to be null!");

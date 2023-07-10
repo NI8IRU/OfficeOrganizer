@@ -26,7 +26,7 @@ public class AddressController {
     @GetMapping
     public GetAddressDto readAddressByName(@RequestParam String name) throws ResponseStatusNotFoundException {
 
-        return addressService.getAddressByname(name);
+        return addressService.getAddressByStreetName(name);
     }
 
     @PostMapping
