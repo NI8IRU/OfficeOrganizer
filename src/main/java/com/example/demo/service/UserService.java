@@ -62,7 +62,7 @@ return getUserDtoList;
     }
 
     public AddUserDto updateUser(Long id, AddUserDto addUserDto) {
-        userRepository.deletedById(id);
+       userRepository.deleteById(id);
         User user = new User();
         addUserDto.setId(user.getId());
         addUserDto.setName(user.getName());

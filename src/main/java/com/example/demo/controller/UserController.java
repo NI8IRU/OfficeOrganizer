@@ -15,11 +15,10 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
-
     public UserController(UserService userService) {
         this.userService = userService;
     }
-@PostMapping("/salva")
+@PostMapping("salva")
 public AddUserDto addUserDto(@RequestBody AddUserDto addUserDto){return userService.addUser(addUserDto);}
     @GetMapping("/list")
 public List<GetUserDto> usersFindAll(){return userService.findAll();}
@@ -27,10 +26,12 @@ public List<GetUserDto> usersFindAll(){return userService.findAll();}
     public GetUserDto getUserDto(@PathVariable Long id) throws ResponseStatusNotFoundException {
         return userService.findById(id);
     }
-    @PutMapping("/{id}")
-    public AddUserDto addUserDto(@PathVariable Long id, @RequestBody AddUserDto addUserDto) {
+
+    @PutMapping ("/{id}")
+    public AddUserDto updateUser(@PathVariable Long id, @RequestBody AddUserDto addUserDto){
         return userService.updateUser(id,addUserDto);
     }
+
     @DeleteMapping("/{id}")
     public GetUserDto logicaldelite(@PathVariable Long id){
         return userService.logicalDeleteSecretaryById(id);

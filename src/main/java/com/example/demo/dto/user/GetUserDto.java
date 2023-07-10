@@ -7,12 +7,12 @@ import java.util.List;
 public class GetUserDto {
     private String name;
     private String surname;
-    private List<Prenotation> prenotations;
+    private List<Prenotation> prenotation;
 
-    public GetUserDto(String name, String surname, List<Prenotation> prenotations) {
+    public GetUserDto(String name, String surname, List<Prenotation> prenotation) {
         this.name = name;
         this.surname = surname;
-        this.prenotations = prenotations;
+        this.prenotation = prenotation;
     }
 
     public String getName() {
@@ -31,11 +31,11 @@ public class GetUserDto {
         this.surname = surname;
     }
 
-    public List<Prenotation> getPrenotations() {
-        return prenotations;
+    public List<Prenotation> getPrenotation() {
+        return prenotation;
     }
 
-    public void setPrenotations(List<Prenotation> prenotations) {
-        this.prenotations = prenotations;
+    public void setPrenotation(List<Prenotation> prenotation) {
+        this.prenotation = prenotation;
     }
 }
