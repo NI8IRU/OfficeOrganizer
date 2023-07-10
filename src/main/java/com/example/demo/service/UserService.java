@@ -26,10 +26,10 @@ public class UserService {
 
     public AddUserDto addUser( AddUserDto addUserDto) {
         User user = new User();
-        user.setId(user.getId());
-        user.setName(user.getName());
-        user.setSurname(user.getSurname());
-        user.setEmail(user.getEmail());
+        user.setId(addUserDto.getId());
+        user.setName(addUserDto.getName());
+        user.setSurname(addUserDto.getSurname());
+        user.setEmail(addUserDto.getEmail());
         userRepository.save(user);
         addUserDto.setId(user.getId());
         addUserDto.setName(user.getName());
@@ -64,10 +64,10 @@ return getUserDtoList;
     public AddUserDto updateUser(Long id, AddUserDto addUserDto) {
        userRepository.deleteById(id);
         User user = new User();
-        addUserDto.setId(user.getId());
-        addUserDto.setName(user.getName());
-        addUserDto.setSurname(user.getSurname());
-        addUserDto.setEmail(user.getEmail());
+        user.setId(addUserDto.getId());
+        user.setName(addUserDto.getName());
+        user.setSurname(addUserDto.getSurname());
+        user.setEmail(addUserDto.getEmail());
         userRepository.save(user);
         addUserDto.setId(user.getId());
         addUserDto.setName(user.getName());
@@ -75,7 +75,10 @@ return getUserDtoList;
         addUserDto.setEmail(user.getEmail());
         return addUserDto;
     }
+public void physicalDeliteById(Long id){
+      userRepository.deleteById(id);
 
+}
     public GetUserDto logicalDeleteSecretaryById(Long id) {
         Optional<User> user = userRepository.findById(id);
         User user1;

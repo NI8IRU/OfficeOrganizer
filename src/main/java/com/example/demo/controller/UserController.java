@@ -6,11 +6,12 @@ import com.example.demo.exception.ResponseStatusNotFoundException;
 import com.example.demo.service.UserService;
 import jakarta.mvc.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
     @Autowired
@@ -18,7 +19,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-@PostMapping("salva")
+@PostMapping("/salva")
 public AddUserDto addUserDto(@RequestBody AddUserDto addUserDto){return userService.addUser(addUserDto);}
     @GetMapping("/list")
 public List<GetUserDto> usersFindAll(){return userService.findAll();}
@@ -37,4 +38,7 @@ public List<GetUserDto> usersFindAll(){return userService.findAll();}
         return userService.logicalDeleteSecretaryById(id);
     }
 
+@DeleteMapping("/delite/{id}")
+    public ResponseEntity<?> physicalDelite(@PathVariable Long id) {userService.physicalDeliteById(id);
+    return ResponseEntity.ok("delited");}
 }
