@@ -41,7 +41,7 @@ public class UserService {
     public List<GetUserDto> findAll() {
         List<User>users=userRepository.findAll();
 List<GetUserDto>getUserDtoList=users.stream().map(user->new GetUserDto(user.getName()
-,user.getSurname(),user.getPrenotations())).toList();
+,user.getSurname(),user.getPrenotation())).toList();
 return getUserDtoList;
     }
 
@@ -50,7 +50,7 @@ return getUserDtoList;
 
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-          GetUserDto getUserDto = new GetUserDto(user.getName(), user.getSurname(),user.getPrenotations());
+          GetUserDto getUserDto = new GetUserDto(user.getName(), user.getSurname(),user.getPrenotation());
             if (user.getStatus() == StatusEnum.ACTIVE) {
                 return getUserDto;
             } else {
@@ -83,7 +83,7 @@ return getUserDtoList;
                 user1 = user.get();
                 user1.setStatus(StatusEnum.DELETED);
                 userRepository.save(user1);
-                return new GetUserDto(user1.getName(), user1.getSurname(), user1.getPrenotations());
+                return new GetUserDto(user1.getName(), user1.getSurname(), user1.getPrenotation());
             } else {
                 try {
                     throw new ResponseStatusNotFoundException("Secretary not found!");

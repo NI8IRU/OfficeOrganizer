@@ -20,7 +20,7 @@ public class Prenotation {
     private Specialist specialist_id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user")
     private User user;
 
     @Column(name = "description")

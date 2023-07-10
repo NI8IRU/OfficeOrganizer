@@ -26,8 +26,8 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(mappedBy = "prenotation")
-    private List<Prenotation> prenotations;
+    @OneToMany(mappedBy = "user")
+    private List<Prenotation> prenotation;
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private StatusEnum status;
@@ -45,7 +45,7 @@ public class User {
         this.name = name;
         this.surname = surname;
         this.email = email;
-        this.prenotations = prenotations;
+        this.prenotation = prenotations;
         this.status = status;
     }
 
@@ -85,12 +85,12 @@ public class User {
         this.email = email;
     }
 
-    public List<Prenotation> getPrenotations() {
-        return prenotations;
+    public List<Prenotation> getPrenotation() {
+        return prenotation;
     }
 
-    public void setPrenotations(List<Prenotation> prenotations) {
-        this.prenotations = prenotations;
+    public void setPrenotation(List<Prenotation> prenotation) {
+        this.prenotation = prenotation;
     }
 
     public StatusEnum getStatus() {
