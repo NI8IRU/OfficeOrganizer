@@ -2,9 +2,11 @@ package com.example.demo.service;
 
 import com.example.demo.dto.specialist.AddSpecialistDto;
 import com.example.demo.dto.specialist.GetSpecialistDto;
+import com.example.demo.entity.Office;
 import com.example.demo.entity.Specialist;
 import com.example.demo.enums.StatusEnum;
 import com.example.demo.exception.ResponseStatusNotFoundException;
+import com.example.demo.repository.OfficeRepository;
 import com.example.demo.repository.SpecialistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.util.Optional;
 @Service
 public class SpecialistService {
     private SpecialistRepository specialistRepository;
+    private OfficeRepository officeRepository;
     @Autowired
     public SpecialistService(SpecialistRepository specialistRepository){
         this.specialistRepository=specialistRepository;
@@ -57,8 +60,8 @@ public class SpecialistService {
     }
     public AddSpecialistDto updateSpecialistDto(Long id,AddSpecialistDto specialistDto){
         Specialist specialist=new Specialist();
-        //TODO fix
-//        specialist.setOffice(id);
+        specialist.setId(id);
+        specialist.setOffice(officeRepository.getReferenceById(specialistDto.getOfficeId()));
         specialist.setSpecialistName(specialistDto.getName());
         specialist.setSpecialistType(specialistDto.getType());
         specialist.setRating(specialistDto.getSpecialistRating());
