@@ -30,5 +30,5 @@ public interface OfficeRepository extends JpaRepository<Office, Long> {
      * @param id the ID of the office
      * @return a reference to the office with the specified ID
      */
-    Office getReferenceById(Long id);
+
 }
