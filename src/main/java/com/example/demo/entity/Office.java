@@ -28,7 +28,6 @@ public class Office {
     @JoinColumn(name = "id_secretary", referencedColumnName = "id")
     private Secretary secretary;
     @OneToMany(mappedBy = "office")
-    @Column(name = "id_specialist")
     private List<Specialist> specialists;
 
     @Column(name = "phone")

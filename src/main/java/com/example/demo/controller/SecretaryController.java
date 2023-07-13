@@ -36,7 +36,7 @@ public class SecretaryController {
     }
 
     @PostMapping("/{id}")
-    public AddSecretaryDto updateSecretary(@PathVariable Long id, @RequestBody AddSecretaryDto secretaryDto) {
+    public AddSecretaryDto updateSecretary(@PathVariable Long id, @RequestBody AddSecretaryDto secretaryDto) throws ResponseStatusNotFoundException {
         return secretaryService.updateSecretaryDto(id, secretaryDto);
     }
 

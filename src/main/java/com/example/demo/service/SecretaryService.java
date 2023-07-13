@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.secretary.AddSecretaryDto;
 import com.example.demo.dto.secretary.GetSecretaryDto;
+import com.example.demo.entity.Office;
 import com.example.demo.entity.Secretary;
 import com.example.demo.enums.StatusEnum;
 import com.example.demo.exception.ResponseStatusNotFoundException;
@@ -79,9 +80,17 @@ public class SecretaryService {
      * @param secretaryDto the Secretary DTO to add
      * @return the added Secretary DTO
      */
-    public AddSecretaryDto addSecretaryDto(AddSecretaryDto secretaryDto) {
+    public AddSecretaryDto addSecretaryDto(AddSecretaryDto secretaryDto) throws ResponseStatusNotFoundException {
         Secretary secretary = new Secretary();
-        secretary.setOffice(officeRepository.getReferenceById(secretaryDto.getOfficeId()));
+        Optional<Office> optionalOffice = (officeRepository.findById(secretaryDto.getOfficeId()));
+        Office office;
+        if (optionalOffice.isPresent()) {
+            office = optionalOffice.get();
+        } else {
+            throw new ResponseStatusNotFoundException("Office not found!");
+        }
+
+        secretary.setOffice(office);
         secretary.setName(secretaryDto.getName());
         secretary.setPhone(secretaryDto.getPhone());
         secretary.setEmail(secretaryDto.getEmail());
@@ -100,19 +109,30 @@ public class SecretaryService {
      * @param secretaryDto the updated Secretary DTO
      * @return the updated Secretary DTO
      */
-    public AddSecretaryDto updateSecretaryDto(Long id, AddSecretaryDto secretaryDto) {
-        Secretary secretary = new Secretary();
-        secretary.setId(id);
-        secretary.setOffice(officeRepository.getReferenceById(secretaryDto.getOfficeId()));
-        secretary.setName(secretaryDto.getName());
-        secretary.setPhone(secretaryDto.getPhone());
-        secretary.setEmail(secretaryDto.getEmail());
-        secretaryRepository.save(secretary);
-        secretaryDto.setOfficeId(secretary.getOffice().getId());
-        secretaryDto.setName(secretary.getName());
-        secretaryDto.setPhone(secretary.getPhone());
-        secretaryDto.setEmail(secretary.getEmail());
-        return secretaryDto;
+    public AddSecretaryDto updateSecretaryDto(Long id, AddSecretaryDto secretaryDto) throws ResponseStatusNotFoundException {
+        Optional<Secretary> optionalSecretary = secretaryRepository.findById(id);
+        if (optionalSecretary.isPresent()) {
+            Secretary secretary = new Secretary();
+            Optional<Office> optionalOffice = officeRepository.findById(secretaryDto.getOfficeId());
+            Office office;
+            if (optionalOffice.isPresent()) {
+                office = optionalOffice.get();
+            } else {
+                throw new ResponseStatusNotFoundException("Office not found!");
+            }
+
+            secretary.setId(id);
+            secretary.setOffice(office);
+            secretary.setName(secretaryDto.getName());
+            secretary.setPhone(secretaryDto.getPhone());
+            secretary.setEmail(secretaryDto.getEmail());
+            secretaryRepository.save(secretary);
+            secretaryDto.setOfficeId(secretary.getOffice().getId());
+            secretaryDto.setName(secretary.getName());
+            secretaryDto.setPhone(secretary.getPhone());
+            secretaryDto.setEmail(secretary.getEmail());
+            return secretaryDto;
+        } else throw new ResponseStatusNotFoundException("Secretary doesn't exists!");
     }
 
     /**
