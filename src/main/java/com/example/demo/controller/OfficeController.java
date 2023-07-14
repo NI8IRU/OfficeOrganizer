@@ -59,13 +59,13 @@ public class OfficeController {
     }
 
 
-    @DeleteMapping("/logicalDelete/{name}")
+    @DeleteMapping("/logicalDeleteByName/{name}")
     public ResponseEntity<?> logicalDeleteByOfficeName(@PathVariable String name) throws ResponseStatusNotFoundException {
 
 
         officeService.logicalDeleteOfficeByName(name);
 
-        return ResponseEntity.ok().body("office deleted !");
+        return ResponseEntity.ok().body("office status set to 'deleted' !");
     }
 
 

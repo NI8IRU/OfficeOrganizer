@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.enums.StatusEnum;
 import jakarta.persistence.*;
 
 /**
@@ -18,6 +19,11 @@ public class Address {
     @OneToOne
     @JoinColumn(name = "office_id")
     private Office office;
+
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private StatusEnum status;
 
 
     /**
@@ -40,6 +46,24 @@ public class Address {
      */
     public Address() {
     }
+
+    /**
+     *
+     * @return address' status
+     */
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+
+    /**
+     *
+     * @param status StatusEnum
+     */
+    public void setStatus(StatusEnum status) {
+        this.status = status;
+    }
+
 
     /**
      * @return id

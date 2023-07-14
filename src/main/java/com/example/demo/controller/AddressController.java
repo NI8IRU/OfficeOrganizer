@@ -23,13 +23,13 @@ public class AddressController {
     }
 
 
-    @GetMapping
-    public GetAddressDto readAddressByName(@RequestParam String name) throws ResponseStatusNotFoundException {
+    @GetMapping("/{name}")
+    public GetAddressDto readAddressByName(@PathVariable String name) throws ResponseStatusNotFoundException {
 
         return addressService.getAddressByStreetName(name);
     }
 
-    @PostMapping
+    @PostMapping("/addingAddress")
     public ResponseEntity<?> AddAddressDto(@RequestBody AddAddressDto getAddressDto) throws ResponseStatusNotFoundException {
 
         addressService.addAddress(getAddressDto);
@@ -38,11 +38,19 @@ public class AddressController {
     }
 
 
-    @DeleteMapping("/logicalDelete")
-    public ResponseEntity<?> logicalDeleteAddressByName(String name) {
-        addressService.deleteAddressByName(name);
+    @DeleteMapping("/physicalDelete/{id}")
+    public ResponseEntity<?> physicalDeleteAddressById(@PathVariable Long id) {
+        addressService.deleteAddressById(id);
         return ResponseEntity.ok().body("Address deleted");
 
+    }
+
+    @DeleteMapping("/logicalDelete/{id}")
+    public ResponseEntity<?> logicalDeleteById(@PathVariable Long id) throws ResponseStatusNotFoundException {
+
+        addressService.logicalDeleteById(id);
+
+        return ResponseEntity.ok().body("Set address status to 'deleted'");
     }
 
 }

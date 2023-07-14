@@ -1,6 +1,8 @@
 package com.example.demo.dto.address;
 
 
+import com.example.demo.enums.StatusEnum;
+
 public class GetAddressDto {
 
     private Long id;
@@ -10,6 +12,8 @@ public class GetAddressDto {
     private String city;
     private String additionalInformation;
     private String office;
+
+    private StatusEnum status;
 
 
     /**
@@ -31,6 +35,23 @@ public class GetAddressDto {
      * Empty constructor
      */
     public GetAddressDto() {
+    }
+
+    /**
+     *
+     * @return address' status
+     */
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+
+    /**
+     *
+     * @param status StatusEnum
+     */
+    public void setStatus(StatusEnum status) {
+        this.status = status;
     }
 
     /**

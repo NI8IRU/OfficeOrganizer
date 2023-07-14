@@ -4,6 +4,7 @@ package com.example.demo.service;
 import com.example.demo.dto.address.AddAddressDto;
 import com.example.demo.dto.address.GetAddressDto;
 import com.example.demo.entity.Address;
+import com.example.demo.enums.StatusEnum;
 import com.example.demo.exception.ResponseStatusNotFoundException;
 import com.example.demo.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +24,14 @@ public class AddressService {
     }
 
 
-
-
-
     public GetAddressDto getAddressByStreetName(String street) throws ResponseStatusNotFoundException {
 
-        Optional<Address> optionalAddress = addressRepository.getReferenceByStreet(street);
+        Address addressRepositoryReferenceByStreet = addressRepository.getReferenceByStreet(street);
 
-        if(optionalAddress.isPresent()){
+
+        Optional<Address> optionalAddress = Optional.ofNullable(addressRepositoryReferenceByStreet);
+
+        if (optionalAddress.isPresent()) {
 
             Address address = optionalAddress.get();
 
@@ -55,7 +56,7 @@ public class AddressService {
 
         Optional<Address> optionalAddress = addressRepository.findById(id);
 
-        if(optionalAddress.isPresent()){
+        if (optionalAddress.isPresent()) {
 
             Address address = optionalAddress.get();
 
@@ -73,19 +74,15 @@ public class AddressService {
             return addressDto;
 
 
-
-
-        } else  {
+        } else {
             throw new ResponseStatusNotFoundException("Address not found!");
         }
     }
 
 
-
-
     public void addAddress(AddAddressDto address) throws ResponseStatusNotFoundException {
 
-        if(address != null){
+        if (address != null) {
             Address address1 = new Address();
 
             address1.setStreet(address.getStreet());
@@ -97,21 +94,50 @@ public class AddressService {
             addressRepository.save(address1);
 
 
-        }else throw new ResponseStatusNotFoundException("This address is empty!");
+        } else throw new ResponseStatusNotFoundException("This address is empty!");
 
     }
 
-    public void deleteAddressByName(String name) {
+    public void deleteAddressById(Long id) {
 
-        Optional<Address> address = addressRepository.getReferenceByStreet(name);
+        Optional<Address> address = addressRepository.findById(id);
 
-        if(address.isPresent()){
 
-            addressRepository.deleteByStreet(name);
-        } else{
+        if (address.isPresent()) {
 
-            throw new NullPointerException("The name seems to be null!");
+            addressRepository.deleteById(id);
+        } else {
+
+            throw new NullPointerException("The id seems to be null!");
         }
+
+    }
+
+    public GetAddressDto logicalDeleteById(Long id) throws ResponseStatusNotFoundException {
+
+
+        Optional<Address> optionalAddress = addressRepository.findById(id);
+
+        Address address;
+
+        if(optionalAddress.isPresent()){
+
+            address = optionalAddress.get();
+
+        } else{
+            throw new ResponseStatusNotFoundException("Address not found!");
+
+        }
+
+        address.setStatus(StatusEnum.DELETED);
+
+        addressRepository.save(address);
+
+
+        return new GetAddressDto
+                (address.getStreet(), address.getPostalCode(), address.getCity(),
+                        address.getAdditionalInformation(), address.getOffice().toString());
+
 
     }
 
