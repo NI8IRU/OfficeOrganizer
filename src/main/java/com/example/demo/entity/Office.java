@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import com.example.demo.enums.StatusEnum;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -35,6 +36,8 @@ public class Office {
     private String phone;
     @Column(name = "email")
     private String email;
+
+    @JsonManagedReference
     @OneToOne(mappedBy = "office")
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;

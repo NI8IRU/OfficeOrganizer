@@ -23,12 +23,34 @@ public class GetAddressDto {
      * @param additionalInformation additional info about the office
      * @param office                office in this address
      */
-    public GetAddressDto(String street, Integer postalCode, String city, String additionalInformation, String office) {
+
+
+    public GetAddressDto(String street, Integer postalCode, String city, String additionalInformation, String office, StatusEnum status) {
         this.street = street;
         this.postalCode = postalCode;
         this.city = city;
         this.additionalInformation = additionalInformation;
         this.office = office;
+        this.status = status;
+    }
+
+
+    public GetAddressDto(String street, Integer postalCode, String city, String additionalInformation, StatusEnum status) {
+        this.street = street;
+        this.postalCode = postalCode;
+        this.city = city;
+        this.additionalInformation = additionalInformation;
+        this.status = status;
+    }
+
+
+    public GetAddressDto(Long id, String street, Integer postalCode, String city, String additionalInformation, StatusEnum status) {
+        this.id = id;
+        this.street = street;
+        this.postalCode = postalCode;
+        this.city = city;
+        this.additionalInformation = additionalInformation;
+        this.status = status;
     }
 
     /**

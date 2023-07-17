@@ -1,6 +1,7 @@
 package com.example.demo.dto.address;
 
 import com.example.demo.entity.Office;
+import com.example.demo.enums.StatusEnum;
 
 public class AddAddressDto {
 
@@ -11,6 +12,9 @@ public class AddAddressDto {
     private String city;
     private String additionalInformation;
     private Office office;
+
+    private StatusEnum status;
+
 
 
     /**
@@ -28,10 +32,22 @@ public class AddAddressDto {
         this.office = office;
     }
 
+
+
+
     /**
      * Empty constructor
      */
     public AddAddressDto() {
+    }
+
+
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
     }
 
     /**

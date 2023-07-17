@@ -38,6 +38,18 @@ public class GetOfficeDto {
         this.status = status;
     }
 
+    public GetOfficeDto(Long id, String officeName, Secretary secretary, List<Specialist> specialists, String phone, String email, Address address, Double rating, StatusEnum status) {
+        Id = id;
+        this.officeName = officeName;
+        this.secretary = secretary;
+        this.specialists = specialists;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.rating = rating;
+        this.status = status;
+    }
+
     public Long getId() {
         return Id;
     }

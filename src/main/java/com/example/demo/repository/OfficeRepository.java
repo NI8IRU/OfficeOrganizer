@@ -18,7 +18,6 @@ public interface OfficeRepository extends JpaRepository<Office, Long> {
      * @return the office according to its officeName
      */
 
-    @Modifying
     @Query(value = "SELECT o FROM Office o WHERE o.officeName = :officeName")
    Office getReferenceByOfficeName(@Param("officeName") String officeName);
 
@@ -28,15 +27,8 @@ public interface OfficeRepository extends JpaRepository<Office, Long> {
      * @param officeName Office's officeName
      */
 
-    @Modifying
     @Query("DELETE FROM Office o WHERE o.officeName = :officeName")
     void deleteByOfficeName(@Param("officeName") String officeName);
 
-    /**
-     * Retrieves a reference to an office by its ID.
-     *
-     * @param id the ID of the office
-     * @return a reference to the office with the specified ID
-     */
 
 }

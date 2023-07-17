@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 
 import com.example.demo.dto.office.GetOfficeDto;
-import com.example.demo.entity.Address;
 import com.example.demo.entity.Office;
 import com.example.demo.exception.ResponseStatusNotFoundException;
 import com.example.demo.service.OfficeService;
@@ -34,7 +33,7 @@ public class OfficeController {
 
 
         for (Office office : officeList) {
-            officeDto.add(new GetOfficeDto(office.getOfficeName(), office.getSecretary(),
+            officeDto.add(new GetOfficeDto(office.getId(), office.getOfficeName(), office.getSecretary(),
                     office.getSpecialists(), office.getPhone(), office.getEmail(), office.getAddress(), office.getRating(), office.getStatus()));
         }
 
@@ -49,7 +48,7 @@ public class OfficeController {
     }
 
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<?> createOfficeDto(@RequestBody GetOfficeDto getOfficeDto) {
 
 
@@ -59,14 +58,20 @@ public class OfficeController {
     }
 
 
-    @DeleteMapping("/logicalDeleteByName/{name}")
-    public ResponseEntity<?> logicalDeleteByOfficeName(@PathVariable String name) throws ResponseStatusNotFoundException {
+    @DeleteMapping("/logicalDeleteById/{id}")
+    public ResponseEntity<?> logicalDeleteByOfficeId(@PathVariable Long id) throws ResponseStatusNotFoundException {
 
 
-        officeService.logicalDeleteOfficeByName(name);
+        officeService.logicalDeleteOfficeById(id);
 
         return ResponseEntity.ok().body("office status set to 'deleted' !");
     }
 
+@DeleteMapping("/physicalDelete/{id}")
+    public ResponseEntity<?> physicalDelteById(@PathVariable Long id){
 
+        officeService.physicalDeleteOfficeById(id);
+
+        return ResponseEntity.ok().body("Office deleted!");
+}
 }

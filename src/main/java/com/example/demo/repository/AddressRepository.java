@@ -14,18 +14,9 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
      * @param street address's street
      * @return the address
      */
-    @Modifying
     @Query("SELECT a FROM Address a WHERE a.street = :street")
-   Address getReferenceByStreet(@Param("street") String street);
+  Optional <Address> getReferenceByStreet(@Param("street") String street);
 
-    /**
-     * Delete the address according to its street
-     *
-     * @param street address' street
-     */
-    @Modifying
-    @Query("DELETE FROM Address a WHERE a.street = :street")
-    void deleteByStreet(@Param("street") String street);
 
     /**
      * Retrieves a reference to an address by its ID.

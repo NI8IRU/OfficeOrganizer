@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import com.example.demo.enums.StatusEnum;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 /**
@@ -16,6 +17,8 @@ public class Address {
     private Integer postalCode;
     private String city;
     private String additionalInformation;
+
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "office_id")
     private Office office;

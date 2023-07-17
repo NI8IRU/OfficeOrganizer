@@ -10,6 +10,7 @@ import com.example.demo.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,16 +25,24 @@ public class AddressService {
     }
 
 
+
+
+    public List<Address> gettingAllAddress(){
+
+        return addressRepository.findAll();
+    }
+
+
     public GetAddressDto getAddressByStreetName(String street) throws ResponseStatusNotFoundException {
 
-        Address addressRepositoryReferenceByStreet = addressRepository.getReferenceByStreet(street);
+        Optional<Address> addressRepositoryReferenceByStreet = addressRepository.getReferenceByStreet(street);
 
 
-        Optional<Address> optionalAddress = Optional.ofNullable(addressRepositoryReferenceByStreet);
 
-        if (optionalAddress.isPresent()) {
 
-            Address address = optionalAddress.get();
+        if (addressRepositoryReferenceByStreet.isPresent()) {
+
+            Address address = addressRepositoryReferenceByStreet.get();
 
             GetAddressDto getAddressDto = new GetAddressDto();
 
@@ -42,6 +51,7 @@ public class AddressService {
             getAddressDto.setStreet(address.getStreet());
             getAddressDto.setPostalCode(address.getPostalCode());
             getAddressDto.setAdditionalInformation(address.getAdditionalInformation());
+            getAddressDto.setStatus(address.getStatus());
 
             return getAddressDto;
 
@@ -90,6 +100,7 @@ public class AddressService {
             address1.setOffice(address.getOffice());
             address1.setPostalCode(address.getPostalCode());
             address1.setAdditionalInformation(address.getAdditionalInformation());
+            address1.setStatus(address.getStatus());
 
             addressRepository.save(address1);
 
@@ -112,6 +123,8 @@ public class AddressService {
         }
 
     }
+
+
 
     public GetAddressDto logicalDeleteById(Long id) throws ResponseStatusNotFoundException {
 
@@ -136,7 +149,7 @@ public class AddressService {
 
         return new GetAddressDto
                 (address.getStreet(), address.getPostalCode(), address.getCity(),
-                        address.getAdditionalInformation(), address.getOffice().toString());
+                        address.getAdditionalInformation(), address.getOffice().toString(), address.getStatus());
 
 
     }
