@@ -33,12 +33,12 @@ public List<GetUserDto> usersFindAll(){return userService.findAll();}
         return userService.updateUser(id,addUserDto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delite/{id}")
     public GetUserDto logicaldelite(@PathVariable Long id){
         return userService.logicalDeleteSecretaryById(id);
     }
 
-@DeleteMapping("/delite/{id}")
+@DeleteMapping("/Delite/{id}")
     public ResponseEntity<?> physicalDelite(@PathVariable Long id) {userService.physicalDeliteById(id);
     return ResponseEntity.ok("delited");}
 }

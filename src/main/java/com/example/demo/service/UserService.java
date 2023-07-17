@@ -24,6 +24,11 @@ public class UserService {
         this.prenotationRepository = prenotationRepository;
     }
 
+    /**
+     * method to add new user account into database
+     * @param addUserDto
+     * @return
+     */
     public AddUserDto addUser( AddUserDto addUserDto) {
         User user = new User();
         user.setId(addUserDto.getId());
@@ -38,19 +43,29 @@ public class UserService {
         return addUserDto;
     }
 
+    /**
+     * method to find all user accont, for exemple police need to know all user
+     * @return
+     */
     public List<GetUserDto> findAll() {
         List<User>users=userRepository.findAll();
-List<GetUserDto>getUserDtoList=users.stream().map(user->new GetUserDto(user.getName()
+List<GetUserDto>getUserDtoList=users.stream().map(user->new GetUserDto(user.getId(),user.getName()
 ,user.getSurname(),user.getPrenotation())).toList();
 return getUserDtoList;
     }
 
+    /**
+     * method to find sigle  user account
+     * @param id
+     * @return
+     * @throws ResponseStatusNotFoundException
+     */
     public GetUserDto findById(Long id) throws ResponseStatusNotFoundException {
         Optional<User> optionalUser = userRepository.findById(id);
 
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-          GetUserDto getUserDto = new GetUserDto(user.getName(), user.getSurname(),user.getPrenotation());
+          GetUserDto getUserDto = new GetUserDto(user.getId(),user.getName(), user.getSurname(),user.getPrenotation());
             if (user.getStatus() == StatusEnum.ACTIVE) {
                 return getUserDto;
             } else {
@@ -61,6 +76,12 @@ return getUserDtoList;
         }
     }
 
+    /**
+     * method to modify a user accont
+     * @param id
+     * @param addUserDto
+     * @return
+     */
     public AddUserDto updateUser(Long id, AddUserDto addUserDto) {
        userRepository.deleteById(id);
         User user = new User();
@@ -75,10 +96,21 @@ return getUserDtoList;
         addUserDto.setEmail(user.getEmail());
         return addUserDto;
     }
-public void physicalDeliteById(Long id){
+
+    /**
+     * method to remove accont from database
+     * @param id
+     */
+    public void physicalDeliteById(Long id){
       userRepository.deleteById(id);
 
 }
+
+    /**
+     * logical delited by id, the account will not delite from database, but it's can't call by get all or getId
+     * @param id
+     * @return
+     */
     public GetUserDto logicalDeleteSecretaryById(Long id) {
         Optional<User> user = userRepository.findById(id);
         User user1;
@@ -86,10 +118,10 @@ public void physicalDeliteById(Long id){
                 user1 = user.get();
                 user1.setStatus(StatusEnum.DELETED);
                 userRepository.save(user1);
-                return new GetUserDto(user1.getName(), user1.getSurname(), user1.getPrenotation());
+                return new GetUserDto(user1.getId(),user1.getName(), user1.getSurname(), user1.getPrenotation());
             } else {
                 try {
-                    throw new ResponseStatusNotFoundException("Secretary not found!");
+                    throw new ResponseStatusNotFoundException("user not found!");
                 } catch (ResponseStatusNotFoundException e) {
                     throw new RuntimeException(e);
                 }

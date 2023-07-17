@@ -5,14 +5,24 @@ import com.example.demo.entity.Prenotation;
 import java.util.List;
 
 public class GetUserDto {
+    private Long id;
     private String name;
     private String surname;
     private List<Prenotation> prenotation;
 
-    public GetUserDto(String name, String surname, List<Prenotation> prenotation) {
+    public GetUserDto(Long id,String name, String surname, List<Prenotation> prenotation) {
+        this.id=id;
         this.name = name;
         this.surname = surname;
         this.prenotation = prenotation;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
