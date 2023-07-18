@@ -5,6 +5,7 @@ import com.example.demo.dto.secretary.GetSecretaryDto;
 import com.example.demo.entity.Office;
 import com.example.demo.entity.Secretary;
 import com.example.demo.enums.StatusEnum;
+import com.example.demo.exception.BadRequestException;
 import com.example.demo.exception.ResponseStatusNotFoundException;
 import com.example.demo.repository.OfficeRepository;
 import com.example.demo.repository.SecretaryRepository;
@@ -44,8 +45,10 @@ public class SecretaryService {
         List<Secretary> secretaryList = secretaryRepository.findAll();
         List<GetSecretaryDto> secretaryDtoList = new ArrayList<>();
         for (Secretary secretary : secretaryList) {
-            secretaryDtoList.add(new GetSecretaryDto(secretary.getName(),
-                    secretary.getPhone(), secretary.getEmail(), secretary.getOffice().getOfficeName()));
+            if (secretary.getStatus() == StatusEnum.ACTIVE) {
+                secretaryDtoList.add(new GetSecretaryDto(secretary.getName(),
+                        secretary.getPhone(), secretary.getEmail(), secretary.getOffice().getOfficeName()));
+            }
         }
         return secretaryDtoList;
     }
@@ -80,7 +83,7 @@ public class SecretaryService {
      * @param secretaryDto the Secretary DTO to add
      * @return the added Secretary DTO
      */
-    public AddSecretaryDto addSecretaryDto(AddSecretaryDto secretaryDto) throws ResponseStatusNotFoundException {
+    public AddSecretaryDto addSecretaryDto(AddSecretaryDto secretaryDto) throws Exception{
         Secretary secretary = new Secretary();
         Optional<Office> optionalOffice = (officeRepository.findById(secretaryDto.getOfficeId()));
         Office office;
@@ -94,7 +97,11 @@ public class SecretaryService {
         secretary.setName(secretaryDto.getName());
         secretary.setPhone(secretaryDto.getPhone());
         secretary.setEmail(secretaryDto.getEmail());
+        if (office.getSecretary() == null) {
+            office.setSecretary(secretary);
+        } else throw new BadRequestException("The office already has its own secretary");
         secretaryRepository.save(secretary);
+        officeRepository.save(office);
         secretaryDto.setOfficeId(secretary.getOffice().getId());
         secretaryDto.setName(secretary.getName());
         secretaryDto.setPhone(secretary.getPhone());
@@ -126,7 +133,9 @@ public class SecretaryService {
             secretary.setName(secretaryDto.getName());
             secretary.setPhone(secretaryDto.getPhone());
             secretary.setEmail(secretaryDto.getEmail());
+            office.setSecretary(secretary);
             secretaryRepository.save(secretary);
+            officeRepository.save(office);
             secretaryDto.setOfficeId(secretary.getOffice().getId());
             secretaryDto.setName(secretary.getName());
             secretaryDto.setPhone(secretary.getPhone());

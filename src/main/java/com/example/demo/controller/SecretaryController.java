@@ -30,9 +30,8 @@ public class SecretaryController {
     }
 
     @PostMapping
-    public AddSecretaryDto addSecretary(@RequestBody AddSecretaryDto secretaryDto) throws ResponseStatusNotFoundException {
+    public AddSecretaryDto addSecretary(@RequestBody AddSecretaryDto secretaryDto) throws Exception {
         return secretaryService.addSecretaryDto(secretaryDto);
-
     }
 
     @PostMapping("/{id}")

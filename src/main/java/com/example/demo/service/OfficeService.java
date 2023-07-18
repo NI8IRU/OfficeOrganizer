@@ -6,11 +6,13 @@ import com.example.demo.dto.office.AddOfficeDto;
 import com.example.demo.dto.office.GetOfficeDto;
 import com.example.demo.entity.Address;
 import com.example.demo.entity.Office;
+import com.example.demo.entity.Secretary;
 import com.example.demo.enums.StatusEnum;
 import com.example.demo.exception.ResponseStatusNotFoundException;
 import com.example.demo.repository.OfficeRepository;
 
 
+import com.example.demo.repository.SecretaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +24,15 @@ public class OfficeService {
 
 
     private final OfficeRepository officeRepository;
+    private final SecretaryRepository secretaryRepository;
 
     /**
      * @param officeRepository OfficeRepo's instance
      */
     @Autowired
-    public OfficeService(OfficeRepository officeRepository) {
+    public OfficeService(OfficeRepository officeRepository, SecretaryRepository secretaryRepository) {
         this.officeRepository = officeRepository;
+        this.secretaryRepository = secretaryRepository;
     }
 
 
@@ -107,25 +111,28 @@ public class OfficeService {
     /**
      * To add new offices
      *
-     * @param office office
+     * @param officeDto office
      */
-    public void addOffice(GetOfficeDto office) {
+    public void addOffice(GetOfficeDto officeDto) {
 
-        if (office != null) {
+        if (officeDto != null) {
 
 
-            Office office1 = new Office();
+            Office office = new Office();
+            Secretary secretary = officeDto.getSecretary();
 
-            office1.setOfficeName(office.getOfficeName());
-            office1.setSpecialists(office.getSpecialists());
-            office1.setSecretary(office.getSecretary());
-            office1.setRating(office.getRating());
-            office1.setPhone(office.getPhone());
-            office1.setEmail(office.getEmail());
-            office1.setAddress(office.getAddress());
-            office1.setStatus(office.getStatus());
+            office.setOfficeName(officeDto.getOfficeName());
+            office.setSpecialists(officeDto.getSpecialists());
+            office.setSecretary(secretary);
+            office.setRating(officeDto.getRating());
+            office.setPhone(officeDto.getPhone());
+            office.setEmail(officeDto.getEmail());
+            office.setAddress(officeDto.getAddress());
+            office.setStatus(officeDto.getStatus());
+            secretary.setOffice(office);
 
-            officeRepository.save(office1);
+            officeRepository.save(office);
+            secretaryRepository.save(secretary);
 
 
         } else throw new NullPointerException("This office is empty!");
@@ -141,19 +148,20 @@ public class OfficeService {
         if (optionalOffice.isPresent()) {
 
             Office office = new Office();
-
+            Secretary secretary = office.getSecretary();
 
             office.setOfficeName(officeDto.getOfficeName());
             office.setEmail(officeDto.getEmail());
             office.setPhone(officeDto.getPhone());
             office.setAddress(officeDto.getAddress());
             office.setSpecialists(officeDto.getSpecialists());
-            office.setSecretary(officeDto.getSecretary());
+            office.setSecretary(secretary);
             office.setRating(officeDto.getRating());
             office.setStatus(officeDto.getStatus());
 
 
             officeRepository.save(office);
+            secretaryRepository.save(secretary);
 
 
             officeDto.setOfficeName(office.getOfficeName());
