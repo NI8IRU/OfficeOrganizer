@@ -4,9 +4,11 @@ package com.example.demo.service;
 import com.example.demo.dto.address.AddAddressDto;
 import com.example.demo.dto.address.GetAddressDto;
 import com.example.demo.entity.Address;
+import com.example.demo.entity.Office;
 import com.example.demo.enums.StatusEnum;
 import com.example.demo.exception.ResponseStatusNotFoundException;
 import com.example.demo.repository.AddressRepository;
+import com.example.demo.repository.OfficeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +19,19 @@ import java.util.Optional;
 public class AddressService {
 
 
+    OfficeRepository officeRepository;
+
     AddressRepository addressRepository;
 
+
+
     @Autowired
-    public AddressService(AddressRepository addressRepository) {
+    public AddressService(OfficeRepository officeRepository, AddressRepository addressRepository) {
+        this.officeRepository = officeRepository;
         this.addressRepository = addressRepository;
     }
+
+
 
 
 
@@ -106,6 +115,44 @@ public class AddressService {
 
 
         } else throw new ResponseStatusNotFoundException("This address is empty!");
+
+    }
+
+
+    public AddAddressDto updateAddress(Long id, AddAddressDto addressDto) throws ResponseStatusNotFoundException {
+
+        Optional<Address> optionalAddress = addressRepository.findById(id);
+
+        if(optionalAddress.isPresent()){
+
+            Address address = new Address();
+
+
+            address.setStreet(addressDto.getStreet());
+            address.setCity(addressDto.getCity());
+            address.setPostalCode(addressDto.getPostalCode());
+            address.setAdditionalInformation(addressDto.getAdditionalInformation());
+            address.setOffice(addressDto.getOffice());
+
+
+            addressRepository.save(address);
+
+
+            addressDto.setStreet(address.getStreet());
+            addressDto.setCity(address.getCity());
+            addressDto.setPostalCode(address.getPostalCode());
+            addressDto.setAdditionalInformation(address.getAdditionalInformation());
+            addressDto.setOffice(address.getOffice());
+
+
+            return addressDto;
+
+
+        }else {
+            throw new ResponseStatusNotFoundException("Address not found!");
+        }
+
+
 
     }
 

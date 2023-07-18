@@ -63,6 +63,12 @@ public class AddressController {
         return ResponseEntity.ok().body("Address added");
     }
 
+    @PostMapping("/updateAddress/{id}")
+    public AddAddressDto updateAddress(@PathVariable Long id, @RequestBody AddAddressDto addressDto) throws ResponseStatusNotFoundException {
+
+        return addressService.updateAddress(id, addressDto);
+
+    }
 
     @DeleteMapping("/physicalDelete/{id}")
     public ResponseEntity<?> physicalDeleteAddressById(@PathVariable Long id) {

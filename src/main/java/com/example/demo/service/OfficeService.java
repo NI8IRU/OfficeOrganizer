@@ -1,7 +1,10 @@
 package com.example.demo.service;
 
 
+import com.example.demo.dto.address.AddAddressDto;
+import com.example.demo.dto.office.AddOfficeDto;
 import com.example.demo.dto.office.GetOfficeDto;
+import com.example.demo.entity.Address;
 import com.example.demo.entity.Office;
 import com.example.demo.enums.StatusEnum;
 import com.example.demo.exception.ResponseStatusNotFoundException;
@@ -130,13 +133,57 @@ public class OfficeService {
     }
 
 
+    public AddOfficeDto updateOffice(Long id, AddOfficeDto officeDto) throws ResponseStatusNotFoundException {
+
+
+        Optional<Office> optionalOffice = officeRepository.findById(id);
+
+        if (optionalOffice.isPresent()) {
+
+            Office office = new Office();
+
+
+            office.setOfficeName(officeDto.getOfficeName());
+            office.setEmail(officeDto.getEmail());
+            office.setPhone(officeDto.getPhone());
+            office.setAddress(officeDto.getAddress());
+            office.setSpecialists(officeDto.getSpecialists());
+            office.setSecretary(officeDto.getSecretary());
+            office.setRating(officeDto.getRating());
+            office.setStatus(officeDto.getStatus());
+
+
+            officeRepository.save(office);
+
+
+            officeDto.setOfficeName(office.getOfficeName());
+            officeDto.setEmail(office.getEmail());
+            officeDto.setPhone(office.getPhone());
+            officeDto.setAddress(office.getAddress());
+            officeDto.setSpecialists(office.getSpecialists());
+            officeDto.setSecretary(office.getSecretary());
+            officeDto.setRating(office.getRating());
+            officeDto.setStatus(office.getStatus());
+
+
+            return officeDto;
+        } else {
+            throw new ResponseStatusNotFoundException("Office not found!");
+
+
+        }
+
+
+    }
+
+
     /**
      * This method delete logically the office, not physically, according to its id;
      * perhaps the office it's still in the database but its status is
      * "deleted"
      *
      * @param id office's ide
-     * @return a new GetOfficeDto with datas updtated
+     * @return a new GetOfficeDto with datas updated
      * @throws ResponseStatusNotFoundException if the office isn't found
      */
     public GetOfficeDto logicalDeleteOfficeById(Long id) throws ResponseStatusNotFoundException {
@@ -162,7 +209,7 @@ public class OfficeService {
      * "deleted"
      *
      * @param name office's name
-     * @return a new GetOfficeDto with datas updtated
+     * @return a new GetOfficeDto with datas updated
      * @throws ResponseStatusNotFoundException if the office isn't found
      */
     public GetOfficeDto logicalDeleteOfficeByName(String name) throws ResponseStatusNotFoundException {

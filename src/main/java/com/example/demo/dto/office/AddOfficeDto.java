@@ -1,6 +1,11 @@
 package com.example.demo.dto.office;
 
 
+import com.example.demo.entity.Address;
+import com.example.demo.entity.Secretary;
+import com.example.demo.entity.Specialist;
+import com.example.demo.enums.StatusEnum;
+
 import java.util.List;
 
 public class AddOfficeDto {
@@ -8,19 +13,22 @@ public class AddOfficeDto {
 
 
     private String officeName;
-    private String secretary;
-    private List<String> specialists;
+    private Secretary secretary;
+    private List<Specialist> specialists;
 
 
     private String phone;
 
     private String email;
 
-    private String address;
+    private Address address;
     private Double rating;
 
+    StatusEnum status;
 
-    public AddOfficeDto(String officeName, String secretary, List<String> specialists, String phone, String email, String address, Double rating) {
+
+
+    public AddOfficeDto(String officeName, Secretary secretary, List<Specialist> specialists, String phone, String email, Address address, Double rating, StatusEnum status) {
         this.officeName = officeName;
         this.secretary = secretary;
         this.specialists = specialists;
@@ -28,12 +36,20 @@ public class AddOfficeDto {
         this.email = email;
         this.address = address;
         this.rating = rating;
+        this.status = status;
     }
-
 
     public AddOfficeDto() {
     }
 
+
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
+    }
 
     public String getOfficeName() {
         return officeName;
@@ -43,19 +59,19 @@ public class AddOfficeDto {
         this.officeName = officeName;
     }
 
-    public String getSecretary() {
+    public Secretary getSecretary() {
         return secretary;
     }
 
-    public void setSecretary(String secretary) {
+    public void setSecretary(Secretary secretary) {
         this.secretary = secretary;
     }
 
-    public List<String> getSpecialists() {
+    public List<Specialist> getSpecialists() {
         return specialists;
     }
 
-    public void setSpecialists(List<String> specialists) {
+    public void setSpecialists(List<Specialist> specialists) {
         this.specialists = specialists;
     }
 
@@ -75,11 +91,11 @@ public class AddOfficeDto {
         this.email = email;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 

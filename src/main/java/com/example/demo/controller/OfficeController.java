@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.dto.office.AddOfficeDto;
 import com.example.demo.dto.office.GetOfficeDto;
+import com.example.demo.entity.Address;
 import com.example.demo.entity.Office;
 import com.example.demo.exception.ResponseStatusNotFoundException;
 import com.example.demo.service.OfficeService;
@@ -55,6 +57,12 @@ public class OfficeController {
         officeService.addOffice(getOfficeDto);
         return ResponseEntity.ok().body("Office added!");
 
+    }
+
+    @PostMapping("/updateOffice/{id}")
+    public AddOfficeDto updateOffice(@PathVariable Long id, @RequestBody AddOfficeDto addOfficeDto) throws ResponseStatusNotFoundException {
+
+        return officeService.updateOffice(id, addOfficeDto);
     }
 
 
