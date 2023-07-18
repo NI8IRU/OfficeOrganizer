@@ -36,7 +36,7 @@ public class SpecialistService {
         List<Specialist>specialistList=specialistRepository.findAll();
         List<GetSpecialistDto>specialistDtoList=new ArrayList<>();
         for(Specialist specialist:specialistList){
-            specialistDtoList.add(new GetSpecialistDto(specialist.getSpecialistName(),specialist.getSpecialistType(),specialist.getRating()));
+            specialistDtoList.add(new GetSpecialistDto(specialist.getId(), specialist.getSpecialistName(),specialist.getSpecialistType(),specialist.getRating()));
         }
         return specialistDtoList;
     }
@@ -51,7 +51,7 @@ public class SpecialistService {
         Optional<Specialist> optionalSpecialist=specialistRepository.findById(id);
        if (optionalSpecialist.isPresent()){
            Specialist specialist=optionalSpecialist.get();
-           GetSpecialistDto specialistDto= new GetSpecialistDto(specialist.getSpecialistName(),specialist.getSpecialistType(),specialist.getRating());
+           GetSpecialistDto specialistDto= new GetSpecialistDto(specialist.getId(), specialist.getSpecialistName(),specialist.getSpecialistType(),specialist.getRating());
            if (specialist.getStatus()== StatusEnum.ACTIVE){
                return specialistDto;
            }else{
@@ -111,6 +111,6 @@ public class SpecialistService {
         }
         specialist.setStatus(StatusEnum.DELETED);
         specialistRepository.save(specialist);
-        return new GetSpecialistDto(specialist.getSpecialistName(),specialist.getSpecialistType(),specialist.getRating());
+        return new GetSpecialistDto(specialist.getId(), specialist.getSpecialistName(),specialist.getSpecialistType(),specialist.getRating());
     }
 }

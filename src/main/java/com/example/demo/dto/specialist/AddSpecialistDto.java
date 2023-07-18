@@ -6,18 +6,17 @@ public class AddSpecialistDto {
     private String type;
     private Integer specialistRating;
 
-    public AddSpecialistDto(Long officeId, String name, String type, Integer specialistRating) {
-        this.officeId = officeId;
+    public AddSpecialistDto(String name, String type, Integer specialistRating) {
         this.name = name;
         this.type = type;
         this.specialistRating = specialistRating;
     }
 
     public Long getOfficeId() {
-        return officeId;
+       return officeId;
     }
 
-    public void setOfficeId(Long officeId) {
+   public void setOfficeId(Long officeId) {
         this.officeId = officeId;
     }
 

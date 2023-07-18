@@ -1,14 +1,24 @@
 package com.example.demo.dto.specialist;
 
 public class GetSpecialistDto {
+    private Long id;
     private String name;
     private String type;
     private Integer specialistRating;
 
-    public GetSpecialistDto(String name,String type, Integer specialistRating) {
+    public GetSpecialistDto(Long id, String name,String type, Integer specialistRating) {
+        this.id = id;
         this.name = name;
         this.type = type;
         this.specialistRating = specialistRating;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
