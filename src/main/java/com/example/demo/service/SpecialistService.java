@@ -16,67 +16,72 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- *  SpecialistService provides to business logic of Specialist entity
+ * SpecialistService provides to business logic of Specialist entity
  */
 
 @Service
 public class SpecialistService {
     private SpecialistRepository specialistRepository;
     private OfficeRepository officeRepository;
+
     @Autowired
-    public SpecialistService(SpecialistRepository specialistRepository){
-        this.specialistRepository=specialistRepository;
+    public SpecialistService(SpecialistRepository specialistRepository) {
+        this.specialistRepository = specialistRepository;
 
     }
+
     /**
      * findAll method retrieves all Specialists.
+     *
      * @return a list of all Specialists added.
      */
-    public List<GetSpecialistDto> findAll(){
-        List<Specialist>specialistList=specialistRepository.findAll();
-        List<GetSpecialistDto>specialistDtoList=new ArrayList<>();
-        for(Specialist specialist:specialistList){
-            specialistDtoList.add(new GetSpecialistDto(specialist.getId(), specialist.getSpecialistName(),specialist.getSpecialistType(),specialist.getRating()));
+    public List<GetSpecialistDto> findAll() {
+        List<Specialist> specialistList = specialistRepository.findAll();
+        List<GetSpecialistDto> specialistDtoList = new ArrayList<>();
+        for (Specialist specialist : specialistList) {
+            specialistDtoList.add(new GetSpecialistDto(specialist.getId(), specialist.getSpecialistName(), specialist.getSpecialistType(), specialist.getRating()));
         }
         return specialistDtoList;
     }
 
     /**
-     *
      * @param id = Specialist ID
      * @return the Specialist entity based on id search
      * @throws ResponseStatusNotFoundException if id doesn't  match a listed entity
      */
-    public GetSpecialistDto findById(Long id)throws ResponseStatusNotFoundException {
-        Optional<Specialist> optionalSpecialist=specialistRepository.findById(id);
-       if (optionalSpecialist.isPresent()){
-           Specialist specialist=optionalSpecialist.get();
-           GetSpecialistDto specialistDto= new GetSpecialistDto(specialist.getId(), specialist.getSpecialistName(),specialist.getSpecialistType(),specialist.getRating());
-           if (specialist.getStatus()== StatusEnum.ACTIVE){
-               return specialistDto;
-           }else{
-               throw new ResponseStatusNotFoundException("Specialist is not active!");
-           }
-       }else{
-           throw new ResponseStatusNotFoundException("Specialist not found");
-       }
+    public GetSpecialistDto findById(Long id) throws ResponseStatusNotFoundException {
+        Optional<Specialist> optionalSpecialist = specialistRepository.findById(id);
+
+        if (optionalSpecialist.isPresent()) {
+            Specialist specialist = optionalSpecialist.get();
+            GetSpecialistDto specialistDto = new GetSpecialistDto(specialist.getId(), specialist.getSpecialistName(), specialist.getSpecialistType(), specialist.getRating());
+            if (specialist.getStatus() == StatusEnum.ACTIVE) {
+                return specialistDto;
+            } else {
+                throw new ResponseStatusNotFoundException("Specialist is not active!");
+            }
+        } else {
+            throw new ResponseStatusNotFoundException("Specialist not found");
+        }
     }
 
     /**
      * Adds a new Specialist
+     *
      * @param specialistDto = DATA TRANSFER OBJECT form of Specialist Class
      * @return add a Specialist entity into the database
      */
-    public AddSpecialistDto addSpecialistDto (AddSpecialistDto specialistDto){
-         Specialist specialist= new Specialist();
-         specialist.setSpecialistName(specialistDto.getName());
-         specialist.setSpecialistType(specialistDto.getType());
-         specialist.setRating(specialistDto.getSpecialistRating());
-         specialistRepository.save(specialist);
-         specialistDto.setName(specialist.getSpecialistName());
-         specialistDto.setType(specialist.getSpecialistType());
-         specialistDto.setSpecialistRating(specialist.getRating());
-         return specialistDto;
+    public AddSpecialistDto addSpecialistDto(AddSpecialistDto specialistDto) {
+        Specialist specialist = new Specialist();
+        specialist.setSpecialistName(specialistDto.getName());
+        specialist.setSpecialistType(specialistDto.getType());
+        specialist.setRating(specialistDto.getSpecialistRating());
+        specialist.setStatus(StatusEnum.ACTIVE);
+        specialistRepository.save(specialist);
+        specialistDto.setName(specialist.getSpecialistName());
+        specialistDto.setType(specialist.getSpecialistType());
+        specialistDto.setSpecialistRating(specialist.getRating());
+        return specialistDto;
 
         /**
          * Updates parameters of a Specialist selected by ID.
@@ -84,10 +89,16 @@ public class SpecialistService {
          */
 
     }
-    public AddSpecialistDto updateSpecialistDto(Long id,AddSpecialistDto specialistDto){
-        Specialist specialist=new Specialist();
+
+    public AddSpecialistDto updateSpecialistDto(Long id, AddSpecialistDto specialistDto) {
+        Specialist specialist = new Specialist();
         specialist.setId(id);
-        specialist.setOffice(officeRepository.getReferenceById(specialistDto.getOfficeId()));
+        try {
+            specialist.setOffice(officeRepository.getReferenceById(specialistDto.getOfficeId()));
+        } catch (Exception e) {
+            specialist.setOffice(null);
+        }
+
         specialist.setSpecialistName(specialistDto.getName());
         specialist.setSpecialistType(specialistDto.getType());
         specialist.setRating(specialistDto.getSpecialistRating());
@@ -101,16 +112,17 @@ public class SpecialistService {
          * @return delete action on selected SpecialistDTO removing from db
          */
     }
-    public GetSpecialistDto logicalDeleteSpecialistById(Long id) throws ResponseStatusNotFoundException{
-        Optional<Specialist>optionalSpecialist=specialistRepository.findById(id);
+
+    public GetSpecialistDto logicalDeleteSpecialistById(Long id) throws ResponseStatusNotFoundException {
+        Optional<Specialist> optionalSpecialist = specialistRepository.findById(id);
         Specialist specialist;
-        if (optionalSpecialist.isPresent()){
+        if (optionalSpecialist.isPresent()) {
             specialist = optionalSpecialist.get();
-        }else{
+        } else {
             throw new ResponseStatusNotFoundException("Specialist not found!");
         }
         specialist.setStatus(StatusEnum.DELETED);
         specialistRepository.save(specialist);
-        return new GetSpecialistDto(specialist.getId(), specialist.getSpecialistName(),specialist.getSpecialistType(),specialist.getRating());
+        return new GetSpecialistDto(specialist.getId(), specialist.getSpecialistName(), specialist.getSpecialistType(), specialist.getRating());
     }
 }
