@@ -36,6 +36,7 @@ public class UserService {
         user.setName(addUserDto.getName());
         user.setSurname(addUserDto.getSurname());
         user.setEmail(addUserDto.getEmail());
+        user.setStatus(StatusEnum.ACTIVE);
         userRepository.save(user);
         addUserDto.setId(user.getId());
         addUserDto.setName(user.getName());
@@ -91,6 +92,7 @@ public class UserService {
         user.setName(addUserDto.getName());
         user.setSurname(addUserDto.getSurname());
         user.setEmail(addUserDto.getEmail());
+        user.setStatus(StatusEnum.ACTIVE);
         userRepository.save(user);
         addUserDto.setId(user.getId());
         addUserDto.setName(user.getName());
