@@ -13,7 +13,8 @@ public class GetPrenotationDto {
     private String description;
     private Date date;
 
-    public GetPrenotationDto(Specialist specialist_id, User user_id, String description, Date date) {
+    public GetPrenotationDto(Long id, Specialist specialist_id, User user_id, String description, Date date) {
+        this.id = id;
         this.specialist_id = specialist_id;
         this.user_id = user_id;
         this.description = description;

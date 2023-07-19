@@ -31,8 +31,10 @@ public class PrenotationService {
         List<GetPrenotationDto> prenotationDtoList = new ArrayList<>();
 
         for(Prenotation prenotation : prenotationList){
-            prenotationDtoList.add(new GetPrenotationDto(prenotation.getSpecialist_id(),
-                    prenotation.getUser(), prenotation.getDescription(), prenotation.getDate()));
+            if(prenotation.getStatus() != StatusEnum.DELETED) {
+                prenotationDtoList.add(new GetPrenotationDto(prenotation.getId(), prenotation.getSpecialist_id(),
+                        prenotation.getUser(), prenotation.getDescription(), prenotation.getDate()));
+            }
         }
 
         return prenotationDtoList;
@@ -44,7 +46,7 @@ public class PrenotationService {
 
         if(optionalPrenotation.isPresent()){
             Prenotation prenotation = optionalPrenotation.get();
-            GetPrenotationDto prenotationDto = new GetPrenotationDto(prenotation.getSpecialist_id(), prenotation.getUser(),
+            GetPrenotationDto prenotationDto = new GetPrenotationDto(prenotation.getId(), prenotation.getSpecialist_id(), prenotation.getUser(),
                     prenotation.getDescription(), prenotation.getDate());
             return prenotationDto;
         } else {
@@ -57,15 +59,15 @@ public class PrenotationService {
         Prenotation prenotation = new Prenotation();
 
         prenotation.setId(prenotationDto.getId());
-        prenotation.setSpecialist_id(prenotationDto.getSpecialist_id());
-        prenotation.setUser(userRepository.getReferenceById(prenotationDto.getId()));
+        //prenotation.setSpecialist_id(prenotationDto.getSpecialist_id());
+        //prenotation.setUser(userRepository.getReferenceById(prenotationDto.getId()));
         prenotation.setDescription(prenotationDto.getDescription());
         prenotation.setDate(prenotationDto.getDate());
         prenotationRepository.save(prenotation);
 
         prenotationDto.setId(prenotation.getId());
-        prenotationDto.setSpecialist_id(prenotation.getSpecialist_id());
-        prenotationDto.setUser_id(prenotation.getUser());
+        //prenotationDto.setSpecialist_id(prenotation.getSpecialist_id());
+        //prenotationDto.setUser_id(prenotation.getUser());
         prenotationDto.setDescription(prenotation.getDescription());
         prenotationDto.setDate(prenotation.getDate());
 
@@ -77,15 +79,15 @@ public class PrenotationService {
         Prenotation prenotation = new Prenotation();
 
         prenotation.setId(id);
-        prenotation.setSpecialist_id(prenotationDto.getSpecialist_id());
-        prenotation.setUser(userRepository.getReferenceById(prenotationDto.getId()));
+        //prenotation.setSpecialist_id(prenotationDto.getSpecialist_id());
+        //prenotation.setUser(userRepository.getReferenceById(prenotationDto.getId()));
         prenotation.setDescription(prenotationDto.getDescription());
         prenotation.setDate(prenotationDto.getDate());
         prenotationRepository.save(prenotation);
 
         prenotationDto.setId(prenotation.getId());
-        prenotationDto.setSpecialist_id(prenotation.getSpecialist_id());
-        prenotationDto.setUser_id(prenotation.getUser());
+        //prenotationDto.setSpecialist_id(prenotation.getSpecialist_id());
+        //prenotationDto.setUser_id(prenotation.getUser());
         prenotationDto.setDescription(prenotation.getDescription());
         prenotationDto.setDate(prenotation.getDate());
 
@@ -106,7 +108,7 @@ public class PrenotationService {
 
         prenotation.setStatus(StatusEnum.DELETED);
         prenotationRepository.save(prenotation);
-        return new GetPrenotationDto(prenotation.getSpecialist_id(), prenotation.getUser(),
+        return new GetPrenotationDto(prenotation.getId(), prenotation.getSpecialist_id(), prenotation.getUser(),
                 prenotation.getDescription(), prenotation.getDate());
     }
 }

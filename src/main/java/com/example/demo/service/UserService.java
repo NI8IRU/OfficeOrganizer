@@ -50,9 +50,10 @@ public class UserService {
      */
     public List<GetUserDto> findAll() {
         List<User>users=userRepository.findAll();
-List<GetUserDto>getUserDtoList=users.stream().map(user->new GetUserDto(user.getId(),user.getName()
-,user.getSurname(),user.getPrenotation())).toList();
-return getUserDtoList;
+        List<GetUserDto>getUserDtoList=users.stream().filter(user -> user.getStatus() != StatusEnum.DELETED)
+                .map(user->new GetUserDto(user.getId(),user.getName()
+                ,user.getSurname(),user.getPrenotation())).toList();
+        return getUserDtoList;
     }
 
     /**

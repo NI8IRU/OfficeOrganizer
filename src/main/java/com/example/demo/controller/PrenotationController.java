@@ -20,7 +20,7 @@ public class PrenotationController {
         this.prenotationService = prenotationService;
     }
 
-    @GetMapping
+    @GetMapping("/getAll")
     public List<GetPrenotationDto> readAllPrenotations(){
         return prenotationService.findAll();
     }
@@ -30,12 +30,12 @@ public class PrenotationController {
         return prenotationService.findById(id);
     }
 
-    @PostMapping
-    public CreatePrenotationDto addPrenotation(@PathVariable CreatePrenotationDto prenotationDto){
+    @PostMapping("/add")
+    public CreatePrenotationDto addPrenotation(@RequestBody CreatePrenotationDto prenotationDto){
         return prenotationService.createPrenotationDto(prenotationDto);
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public CreatePrenotationDto updatePrenotation(@PathVariable Long id, @RequestBody CreatePrenotationDto prenotationDto){
         return prenotationService.updatePrenotationDto(id, prenotationDto);
     }
