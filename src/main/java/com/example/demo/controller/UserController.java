@@ -23,9 +23,9 @@ public class UserController {
 public AddUserDto addUserDto(@RequestBody AddUserDto addUserDto){return userService.addUser(addUserDto);}
     @GetMapping("/list")
 public List<GetUserDto> usersFindAll(){return userService.findAll();}
-    @GetMapping("/{name}")
-    public GetUserDto getUserDto(@PathVariable Long id) throws ResponseStatusNotFoundException {
-        return userService.findById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getUserDto(@PathVariable Long id) throws ResponseStatusNotFoundException {
+        return userService.findByIdI(id);
     }
 
     @PutMapping ("/{id}")

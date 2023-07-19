@@ -8,6 +8,7 @@ import com.example.demo.exception.ResponseStatusNotFoundException;
 import com.example.demo.repository.PrenotationRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -60,22 +61,22 @@ return getUserDtoList;
      * @return
      * @throws ResponseStatusNotFoundException
      */
-    public GetUserDto findById(Long id) throws ResponseStatusNotFoundException {
+    public ResponseEntity<?> findByIdI(Long id) throws ResponseStatusNotFoundException {
         Optional<User> optionalUser = userRepository.findById(id);
-
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
           GetUserDto getUserDto = new GetUserDto(user.getId(),user.getName(), user.getSurname(),user.getPrenotation());
-            if (user.getStatus() == StatusEnum.ACTIVE) {
-                return getUserDto;
+            if ((user.getStatus() == StatusEnum.ACTIVE)||(user.getStatus()==null)) {
+                return ResponseEntity.ok(optionalUser);
             } else {
                 throw new ResponseStatusNotFoundException("User is off!");
             }
         } else {
-            throw new ResponseStatusNotFoundException("user unfinded!");
+          // throw new ResponseStatusNotFoundException("user unfinded!");
         }
+        //return optionalUser;
+        return ResponseEntity.ok("user unfinded!");
     }
-
     /**
      * method to modify a user accont
      * @param id
