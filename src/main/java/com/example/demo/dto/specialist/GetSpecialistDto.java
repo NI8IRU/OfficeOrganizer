@@ -11,7 +11,9 @@ public class GetSpecialistDto {
         this.name = name;
         this.type = type;
         this.specialistRating = specialistRating;
+
     }
+
 
     public Long getId() {
         return id;

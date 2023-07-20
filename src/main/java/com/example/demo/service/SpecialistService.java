@@ -1,5 +1,4 @@
 package com.example.demo.service;
-
 import com.example.demo.dto.specialist.AddSpecialistDto;
 import com.example.demo.dto.specialist.GetSpecialistDto;
 import com.example.demo.entity.Office;
@@ -39,7 +38,9 @@ public class SpecialistService {
         List<Specialist> specialistList = specialistRepository.findAll();
         List<GetSpecialistDto> specialistDtoList = new ArrayList<>();
         for (Specialist specialist : specialistList) {
-            specialistDtoList.add(new GetSpecialistDto(specialist.getId(), specialist.getSpecialistName(), specialist.getSpecialistType(), specialist.getRating()));
+            if (specialist.getStatus() == StatusEnum.ACTIVE) {
+                specialistDtoList.add(new GetSpecialistDto(specialist.getId(), specialist.getSpecialistName(), specialist.getSpecialistType(), specialist.getRating()));
+            }
         }
         return specialistDtoList;
     }
