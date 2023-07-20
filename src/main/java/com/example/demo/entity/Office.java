@@ -27,12 +27,13 @@ public class Office {
     private String officeName;
     @OneToOne(mappedBy = "office")
     @JoinColumn(name = "id_secretary", referencedColumnName = "id")
+    @JsonManagedReference
     private Secretary secretary;
+    @JsonManagedReference
     @OneToMany(mappedBy = "office")
     private List<Specialist> specialists;
 
     @Column(name = "phone")
-
     private String phone;
     @Column(name = "email")
     private String email;

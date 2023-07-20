@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import com.example.demo.enums.StatusEnum;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
   /**
@@ -15,6 +16,7 @@ public class Specialist {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "id_office", referencedColumnName = "id")
+    @JsonBackReference
     private Office office;
 
     @Column(name = "specialist_name")
