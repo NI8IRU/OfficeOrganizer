@@ -65,6 +65,14 @@ public class OfficeController {
         return officeService.updateOffice(id, addOfficeDto);
     }
 
+    @PostMapping("/update_offices_ratings")
+    public ResponseEntity<String> updateOfficesRatings() {
+        List<Office> offices = officeService.findAllOffices();
+        for (Office office : offices) {
+            office.getRating();
+        }
+        return ResponseEntity.ok().body("Ratings updated!");
+    }
 
     @DeleteMapping("/logicalDeleteById/{id}")
     public ResponseEntity<?> logicalDeleteByOfficeId(@PathVariable Long id) throws ResponseStatusNotFoundException {

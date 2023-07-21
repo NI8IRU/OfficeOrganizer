@@ -192,6 +192,11 @@ public class Office {
      * @return the rating of the office
      */
     public Double getRating() {
+        for (Specialist specialist : specialists) {
+            rating += specialist.getRating();
+        }
+        rating /= specialists.size();
+
         return rating;
     }
 

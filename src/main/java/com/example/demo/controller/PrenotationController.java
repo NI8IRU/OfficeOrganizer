@@ -30,6 +30,11 @@ public class PrenotationController {
         return prenotationService.findById(id);
     }
 
+    @GetMapping("/get_office_prenotations/{officeId}")
+    public List<GetPrenotationDto> getOfficePrenotations(@PathVariable Long officeId) {
+        return prenotationService.getAllPrenotationOfOffice(officeId);
+    }
+
     @PostMapping("/add")
     public CreatePrenotationDto addPrenotation(@RequestBody CreatePrenotationDto prenotationDto){
         return prenotationService.createPrenotationDto(prenotationDto);
