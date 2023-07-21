@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import com.example.demo.enums.StatusEnum;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -17,10 +18,12 @@ public class Prenotation {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "specialist_id", referencedColumnName = "id")
+    @JsonManagedReference
     private Specialist specialist_id;
 
     @ManyToOne
     @JoinColumn(name = "user")
+    @JsonManagedReference
     private User user;
 
     @Column(name = "description")

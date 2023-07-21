@@ -68,6 +68,20 @@ public class PrenotationService {
         return prenotationDtoList;
     }
 
+    public List<GetPrenotationDto> getAllPrenotationOfSpecialist(Long id) {
+        List<Prenotation> prenotationList = prenotationRepository.findAll();
+        List<GetPrenotationDto> prenotationDtoList = new ArrayList<>();
+
+        for(Prenotation prenotation : prenotationList){
+            if(prenotation.getStatus() != StatusEnum.DELETED && prenotation.getSpecialist_id().getId().equals(id)) {
+                prenotationDtoList.add(new GetPrenotationDto(prenotation.getId(), prenotation.getSpecialist_id(),
+                        prenotation.getUser(), prenotation.getDescription(), prenotation.getDate()));
+            }
+        }
+
+        return prenotationDtoList;
+    }
+
     public CreatePrenotationDto createPrenotationDto(CreatePrenotationDto prenotationDto) {
 
         Prenotation prenotation = new Prenotation();

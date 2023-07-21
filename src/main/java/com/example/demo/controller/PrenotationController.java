@@ -35,6 +35,11 @@ public class PrenotationController {
         return prenotationService.getAllPrenotationOfOffice(officeId);
     }
 
+    @GetMapping("/get_specialist_prenotations/{specialistId}")
+    public List<GetPrenotationDto> getAllPrenotationOfSpecialist(@PathVariable Long specialistId) {
+        return prenotationService.getAllPrenotationOfSpecialist(specialistId);
+    }
+
     @PostMapping("/add")
     public CreatePrenotationDto addPrenotation(@RequestBody CreatePrenotationDto prenotationDto){
         return prenotationService.createPrenotationDto(prenotationDto);

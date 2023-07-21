@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import com.example.demo.enums.StatusEnum;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class User {
     private String email;
 
     @OneToMany(mappedBy = "user")
+    @JsonBackReference
     private List<Prenotation> prenotation;
     @Enumerated(EnumType.STRING)
     @Column(name = "status")

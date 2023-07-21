@@ -13,6 +13,7 @@ import jakarta.persistence.*;
 public class Specialist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonBackReference
     private Long id;
     @ManyToOne
     @JoinColumn(name = "id_office", referencedColumnName = "id")

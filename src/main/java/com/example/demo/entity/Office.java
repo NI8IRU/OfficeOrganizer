@@ -192,6 +192,7 @@ public class Office {
      * @return the rating of the office
      */
     public Double getRating() {
+        rating = 0.0;
         for (Specialist specialist : specialists) {
             rating += specialist.getRating();
         }
